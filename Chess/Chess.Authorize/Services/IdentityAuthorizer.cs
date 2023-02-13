@@ -18,16 +18,12 @@ namespace Chess.Authorize.Services
             _jwtService = jwtService;
         }
 
-        public Task LogoutAsync()
-        {
-            return _signInManager.SignOutAsync();
-        }
-
         public async Task<AuthorizeOperationResultDto> TryLoginAsync(LoginDto loginData)
         {
             var player = await _userManager.FindByEmailAsync(loginData.Email);
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(new Player { UserName = loginData.Email }, loginData.Password, false);
 
-            if(player is null)
+            if(player is null || !signInResult.Succeeded)
             {
                 var result = new AuthorizeOperationResultDto(false);
 

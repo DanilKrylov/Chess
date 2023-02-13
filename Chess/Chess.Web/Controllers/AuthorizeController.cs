@@ -29,12 +29,5 @@ namespace Chess.Web.Controllers
         {
             return new JsonResult(await _authorizer.TryRegisterAsync(registerModel));
         }
-
-        [HttpPost("logout")]
-        public async Task<ActionResult> Logout()
-        {
-            await _authorizer.LogoutAsync();
-            return Ok();
-        }
     }
 }

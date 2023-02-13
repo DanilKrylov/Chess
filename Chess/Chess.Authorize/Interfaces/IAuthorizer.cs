@@ -9,7 +9,5 @@ namespace Chess.Authorize.Interfaces
         Task<AuthorizeOperationResultDto> TryLoginAsync(LoginDto loginData);
 
         Task<AuthorizeOperationResultDto> TryRegisterAsync(RegisterDto registerData);
-
-        Task LogoutAsync();
     }
 }
