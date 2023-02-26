@@ -1,4 +1,5 @@
 ﻿using Chess.Data.Enums;
+using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Chess.GameLogic.Services
 {
     internal class GameLogicService : IGameLogicService
     {
-        public Task MovePieceAsync(Guid gameId, int oldVerticalPos, HorizontalPosition oldHorizontalPos, int verticalPos, HorizontalPosition horizontalPos)
+        public Task MovePieceAsync(Guid gameId, PiecePositionDto from, PiecePositionDto to)
         {
             throw new NotImplementedException();
         }

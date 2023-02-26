@@ -14,6 +14,6 @@ namespace GamesManagement.Interfaces
 
         bool TryRemovePlayerFromSearch(string email);
 
-        PlayersMatchDto TryGetMatch(string email, int rating);
+        PlayersMatch TryGetMatch(string email, int rating);
     }
 }

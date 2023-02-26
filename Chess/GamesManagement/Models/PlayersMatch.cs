@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GamesManagement.DtoModels
 {
-    public class PlayersMatchDto
+    public class PlayersMatch
     {
         public bool IsMathced { get;}
 
@@ -14,12 +14,12 @@ namespace GamesManagement.DtoModels
 
         public string BlackPlayerEmail { get;}
 
-        public PlayersMatchDto(bool isMathced)
+        public PlayersMatch(bool isMathced)
         {
             IsMathced = isMathced;
         }
 
-        public PlayersMatchDto(bool isMathced, string whitePlayerEmail, string blackPlayerEmail) : this(isMathced) 
+        public PlayersMatch(bool isMathced, string whitePlayerEmail, string blackPlayerEmail) : this(isMathced) 
         {
             WhitePlayerEmail = whitePlayerEmail;
             BlackPlayerEmail = blackPlayerEmail;

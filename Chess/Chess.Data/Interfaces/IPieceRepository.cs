@@ -10,10 +10,10 @@ namespace Chess.Data.Interfaces
 {
     public interface IPieceRepository
     {
-        Task AddPieceToGame(PieceInGame pieceInGame);
+        Task AddPieceToGame(PieceDto pieceInGame);
 
         Task RemovePieceFromGame(Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition);
 
-        Task MovePiece(PieceInGame pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition);
+        Task MovePiece(PieceDto pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition);
     }
 }

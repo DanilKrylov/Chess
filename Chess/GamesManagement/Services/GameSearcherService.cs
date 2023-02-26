@@ -53,7 +53,7 @@ namespace GamesManagement.Services
             return player is not null;
         }
 
-        public PlayersMatchDto TryGetMatch(string email, int rating)
+        public PlayersMatch TryGetMatch(string email, int rating)
         {
             _semaphore.WaitOne();
             var matchedPlayers = _playersInGamesSearch
@@ -71,13 +71,13 @@ namespace GamesManagement.Services
             if(blackPlayerPlayer == null)
             {
                 _semaphore.Release();
-                return new PlayersMatchDto(false);
+                return new PlayersMatch(false);
             }
 
             _semaphore.Release();
             TryRemovePlayerFromSearch(email);
             TryRemovePlayerFromSearch(blackPlayerPlayer.Email);
-            return new PlayersMatchDto(true, email, blackPlayerPlayer.Email);
+            return new PlayersMatch(true, email, blackPlayerPlayer.Email);
         }
     }
 }

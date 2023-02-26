@@ -19,7 +19,7 @@ namespace Chess.Store.Repositories
             _db = db;
         }
 
-        public Task AddPieceToGame(PieceInGame pieceInGame)
+        public Task AddPieceToGame(PieceDto pieceInGame)
         {
             if(pieceInGame.GameId == default)
             {
@@ -29,7 +29,7 @@ namespace Chess.Store.Repositories
             throw new NotImplementedException();
         }
 
-        public Task MovePiece(PieceInGame pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition)
+        public Task MovePiece(PieceDto pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +39,7 @@ namespace Chess.Store.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task UpdatePiece(PieceInGame pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition)
+        public async Task UpdatePiece(PieceDto pieceInGame, Guid gameId, HorizontalPosition horizontalPosition, int verticalPosition)
         {
             var pieceToUpdate = await _db.PiecesInGames
                 .FirstOrDefaultAsync(c => c.GameId == gameId && c.HorizontalPosition == horizontalPosition && c.VerticalPosition == verticalPosition);
@@ -50,7 +50,7 @@ namespace Chess.Store.Repositories
             }
 
             _db.Remove(pieceToUpdate);
-            _db.Add(new PieceInGame
+            _db.Add(new PieceDto
             {
                 GameId = gameId,
                 HorizontalPosition = horizontalPosition,

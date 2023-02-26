@@ -1,5 +1,7 @@
-﻿using GamesManagement.DtoModels;
+﻿using Chess.Data.Models;
 using GamesManagement.Interfaces;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chess.Web.Hubs
@@ -7,14 +9,16 @@ namespace Chess.Web.Hubs
     public class GameSearchHub : Hub
     {
         private readonly IGameSearcherService _gameSearcherService;
-        public GameSearchHub(IGameSearcherService gameSearcherService) 
+        private readonly UserManager<Player> _userManager;
+
+        public GameSearchHub(IGameSearcherService gameSearcherService, UserManager<Player> userManager) 
         { 
             _gameSearcherService = gameSearcherService;
+            _userManager = userManager;
         }
 
         public async Task StartSearch()
         {
-            var connectionId = Context.ConnectionId;
             await Clients.Caller.SendAsync("Log", new { message = "started" });
             var userEmail = Context.User.Identity.Name;
             if (userEmail is null)
@@ -22,17 +26,21 @@ namespace Chess.Web.Hubs
                 return;
             }
 
-            var match = _gameSearcherService.TryGetMatch(userEmail, 1000);
+            var player = await _userManager.FindByEmailAsync(userEmail);
 
-            if(!match.IsMathced)
+            if(player is null)
             {
-                _gameSearcherService.TryAddPlayerToSearch(userEmail, 1000);
-                await Groups.AddToGroupAsync(Context.ConnectionId, userEmail);
                 return;
             }
 
-            //await Groups.RemoveFromGroupAsync(Context.ConnectionId, "searchGame");
-            //await Groups.RemoveFromGroupAsync(Clients.Group(match.BlackPlayerEmail).)
+            var match = _gameSearcherService.TryGetMatch(userEmail, player.Rating);
+
+            if(!match.IsMathced)
+            {
+                _gameSearcherService.TryAddPlayerToSearch(userEmail, player.Rating);
+                await Groups.AddToGroupAsync(Context.ConnectionId, userEmail);
+                return;
+            }
         }
 
         public async Task FinishSearch()
@@ -44,7 +52,14 @@ namespace Chess.Web.Hubs
             }
 
             _gameSearcherService.TryRemovePlayerFromSearch(userEmail);
-            await Groups.AddToGroupAsync(userEmail, "searchGame");
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            var userEmail = Context.User.Identity.Name;
+
+            _gameSearcherService.TryRemovePlayerFromSearch(userEmail);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, userEmail);
         }
     }
 }

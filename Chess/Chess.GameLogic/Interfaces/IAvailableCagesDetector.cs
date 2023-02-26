@@ -1,6 +1,7 @@
 ﻿using Chess.Data.Enums;
 using Chess.Data.Models;
 using Chess.GameLogic.DtoModels;
+using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Chess.GameLogic.Interfaces
 {
-    public interface IGameLogicService
+    internal interface IAvailableCagesDetector
     {
-        Task MovePieceAsync(Guid gameId, PiecePositionDto from, PiecePositionDto to);
+        List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position);
     }
 }

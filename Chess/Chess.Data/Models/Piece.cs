@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Chess.Data.Models
 {
-    public class PieceInGame
+    public class Piece
     {
         public Guid GameId { get; set; }
 
-        public HorizontalPosition HorizontalPosition { get; set; }
+        public int HorizontalPosition { get; set; }
 
         public int VerticalPosition { get; set; }
 

@@ -16,7 +16,7 @@ namespace Chess.Authorize
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IAuthorizer, IdentityAuthorizer>();
+            services.AddScoped<IAuthorizer, IdentityAuthorizeService>();
             services.AddScoped<IJwtService, JwtService>();
             services.Configure<JwtConfigure>(configuration.GetSection("JwtConfigure"));
 

@@ -22,7 +22,7 @@ namespace GamesManagement.Helpers
 
         public async Task<Game> CreateGameAsync(string whitePlayerEmail, string blackPlayerEmail)
         {
-            var pieces = new List<PieceInGame>();
+            var pieces = new List<PieceDto>();
 
             AddPawnsToDefaultPositions(pieces);
             AddRocksToDefaultPositions(pieces);
@@ -40,11 +40,11 @@ namespace GamesManagement.Helpers
             };
         }
 
-        private static void AddPawnsToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddPawnsToDefaultPositions(List<PieceDto> pieceList)
         {
             foreach (var horizontalPosition in (HorizontalPosition[])Enum.GetValues(typeof(HorizontalPosition)))
             {
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 2,
@@ -52,7 +52,7 @@ namespace GamesManagement.Helpers
                     Color = Color.White,
                 });
 
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 7,
@@ -62,11 +62,11 @@ namespace GamesManagement.Helpers
             }
         }
 
-        private static void AddRocksToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddRocksToDefaultPositions(List<PieceDto> pieceList)
         {
             foreach (var horizontalPosition in new HorizontalPosition[] { HorizontalPosition.A, HorizontalPosition.H })
             {
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 1,
@@ -74,7 +74,7 @@ namespace GamesManagement.Helpers
                     Color = Color.White,
                 });
 
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 8,
@@ -84,11 +84,11 @@ namespace GamesManagement.Helpers
             }
         }
 
-        private static void AddKnightsToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddKnightsToDefaultPositions(List<PieceDto> pieceList)
         {
             foreach (var horizontalPosition in new HorizontalPosition[] { HorizontalPosition.B, HorizontalPosition.G })
             {
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 1,
@@ -96,7 +96,7 @@ namespace GamesManagement.Helpers
                     Color = Color.White,
                 });
 
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 8,
@@ -106,11 +106,11 @@ namespace GamesManagement.Helpers
             }
         }
 
-        private static void AddBishopsToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddBishopsToDefaultPositions(List<PieceDto> pieceList)
         {
             foreach (var horizontalPosition in new HorizontalPosition[] { HorizontalPosition.C, HorizontalPosition.F })
             {
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 1,
@@ -118,7 +118,7 @@ namespace GamesManagement.Helpers
                     Color = Color.White,
                 });
 
-                pieceList.Add(new PieceInGame()
+                pieceList.Add(new PieceDto()
                 {
                     HorizontalPosition = horizontalPosition,
                     VerticalPosition = 8,
@@ -128,9 +128,9 @@ namespace GamesManagement.Helpers
             }
         }
 
-        private static void AddKingsToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddKingsToDefaultPositions(List<PieceDto> pieceList)
         {
-            pieceList.Add(new PieceInGame()
+            pieceList.Add(new PieceDto()
             {
                 HorizontalPosition = HorizontalPosition.E,
                 VerticalPosition = 1,
@@ -138,7 +138,7 @@ namespace GamesManagement.Helpers
                 Color = Color.White,
             });
 
-            pieceList.Add(new PieceInGame()
+            pieceList.Add(new PieceDto()
             {
                 HorizontalPosition = HorizontalPosition.E,
                 VerticalPosition = 8,
@@ -147,9 +147,9 @@ namespace GamesManagement.Helpers
             });
         }
 
-        private static void AddQueensToDefaultPositions(List<PieceInGame> pieceList)
+        private static void AddQueensToDefaultPositions(List<PieceDto> pieceList)
         {
-            pieceList.Add(new PieceInGame()
+            pieceList.Add(new PieceDto()
             {
                 HorizontalPosition = HorizontalPosition.D,
                 VerticalPosition = 1,
@@ -157,7 +157,7 @@ namespace GamesManagement.Helpers
                 Color = Color.White,
             });
 
-            pieceList.Add(new PieceInGame()
+            pieceList.Add(new PieceDto()
             {
                 HorizontalPosition = HorizontalPosition.D,
                 VerticalPosition = 8,

@@ -12,7 +12,7 @@ namespace Chess.Store
     public class ChessContext : IdentityDbContext<Player>
     {
         public DbSet<Game> Games { get; set; }
-        public DbSet<PieceInGame> PiecesInGames { get; set; }
+        public DbSet<PieceDto> PiecesInGames { get; set; }
 
         public ChessContext(DbContextOptions<ChessContext> options)
             : base(options)
@@ -22,7 +22,7 @@ namespace Chess.Store
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PieceInGame>()
+            modelBuilder.Entity<PieceDto>()
                   .HasKey(model => new { model.GameId, model.HorizontalPosition, model.VerticalPosition });
 
             base.OnModelCreating(modelBuilder);

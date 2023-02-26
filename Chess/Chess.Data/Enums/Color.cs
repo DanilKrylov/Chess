@@ -11,4 +11,15 @@ namespace Chess.Data.Enums
         White,
         Black,
     }
+
+    public static class ColorExtensions
+    {
+        public static Color GetOpposite(this Color color)
+        {
+            if(color == Color.Black) 
+                return Color.White;
+
+            return Color.Black;
+        }
+    }
 }

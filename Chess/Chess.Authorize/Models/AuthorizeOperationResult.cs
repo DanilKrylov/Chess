@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace Chess.Authorize.DtoModels
 {
-    public class AuthorizeOperationResultDto
+    public class AuthorizeOperationResult
     {
         public bool Successed { get; set; }
 
         public JwtInfo JwtInfo { get; set; }
 
-        public Dictionary<string, List<string>> Errors
-        { get; set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Errors { get; set; } = new Dictionary<string, List<string>>();
 
-        public AuthorizeOperationResultDto(bool seccessed)
+        public AuthorizeOperationResult(bool seccessed)
         {
             Successed = seccessed;
         }
 
-        public AuthorizeOperationResultDto(bool seccessed, JwtInfo jwtInfo)
+        public AuthorizeOperationResult(bool seccessed, JwtInfo jwtInfo)
         {
             Successed = seccessed;
             JwtInfo = jwtInfo;

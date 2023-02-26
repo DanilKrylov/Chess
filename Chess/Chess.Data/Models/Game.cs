@@ -20,6 +20,6 @@ namespace Chess.Data.Models
 
         public Color MoveTurn { get; set; }
 
-        public List<PieceInGame> Pieces { get; set; } 
+        public List<PieceDto> Pieces { get; set; } 
     }
 }
