@@ -1,5 +1,4 @@
-﻿using Chess.GameLogic.DtoModels;
-using Chess.GameLogic.Interfaces;
+﻿using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;

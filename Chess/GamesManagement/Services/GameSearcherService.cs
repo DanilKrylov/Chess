@@ -1,22 +1,16 @@
 ﻿using Chess.Data.Models;
-using GamesManagement.DtoModels;
-using GamesManagement.Interfaces;
-using GamesManagement.Options;
-using Microsoft.AspNetCore.Identity;
+using Chess.GamesManagement.DtoModels;
+using Chess.GamesManagement.Interfaces;
+using Chess.GamesManagement.Options;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GamesManagement.Services
+namespace Chess.GamesManagement.Services
 {
     internal class GameSearcherService : IGameSearcherService
     {
         private readonly List<PlayerInGameSearchDto> _playersInGamesSearch = new();
         private readonly GameSearchConfigure _searchConfigure;
-        private readonly Semaphore _semaphore = new Semaphore(1, 1);
+        private readonly Semaphore _semaphore = new(1, 1);
 
         public GameSearcherService(IOptions<GameSearchConfigure> gameSearchConfigure)
         {
@@ -39,9 +33,14 @@ namespace GamesManagement.Services
             return !isPlayerInList;
         }
 
-        public bool TryRemovePlayerFromSearch(string email)
+        public bool TryRemovePlayerFromSearch(string email) =>
+            TryRemovePlayerFromSearch(email, true);
+
+        internal bool TryRemovePlayerFromSearch(string email, bool isUserRequest)
         {
-            _semaphore.WaitOne();
+            if(isUserRequest)
+                _semaphore.WaitOne();
+
             var player = _playersInGamesSearch.FirstOrDefault(player => player.Email == email);
 
             if(player is not null)
@@ -49,7 +48,9 @@ namespace GamesManagement.Services
                 _playersInGamesSearch.Remove(player);
             }
 
-            _semaphore.Release();
+            if (isUserRequest)
+                _semaphore.Release();
+
             return player is not null;
         }
 
@@ -63,7 +64,7 @@ namespace GamesManagement.Services
                     var ratingTimeIncrasing = _searchConfigure.RatingDifference.IncrasingFor1Seconds * player.SecondsInSearching;
                     var totalMaxRatingDifference = _searchConfigure.RatingDifference.DefaultMax + ratingTimeIncrasing;
 
-                    return playersRatingDifference <= totalMaxRatingDifference;
+                    return playersRatingDifference <= totalMaxRatingDifference && player.Email != email;
                 });
 
             var blackPlayerPlayer = matchedPlayers.FirstOrDefault();
@@ -74,9 +75,10 @@ namespace GamesManagement.Services
                 return new PlayersMatch(false);
             }
 
+            TryRemovePlayerFromSearch(email, false);
+            TryRemovePlayerFromSearch(blackPlayerPlayer.Email, false);
             _semaphore.Release();
-            TryRemovePlayerFromSearch(email);
-            TryRemovePlayerFromSearch(blackPlayerPlayer.Email);
+
             return new PlayersMatch(true, email, blackPlayerPlayer.Email);
         }
     }

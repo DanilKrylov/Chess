@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamesManagement.DtoModels
+namespace Chess.GamesManagement.DtoModels
 {
     public class PlayersMatch
     {

@@ -1,6 +1,4 @@
 ﻿using Chess.Data.Enums;
-using Chess.Data.Models;
-using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;
@@ -42,9 +40,24 @@ namespace Chess.GameLogic.Extensions
             return resultPieces;
         }
 
+        public static void MovePiece(this List<PieceDto> pieces, PieceDto piece, PiecePositionDto to)
+        {
+            if (pieces is null || piece is null)
+            {
+                throw new ArgumentException();
+            }
+
+            pieces.Remove(piece);
+            pieces.Add(piece with { Position =  to });
+        }
+
         public static bool CanBeSetedToPosition(this IEnumerable<PieceDto> pieces, PiecePositionDto position, Color pieceColor, out bool isEnemyOnCage)
         {
             isEnemyOnCage = false;
+            if (position.PosX > 8 || position.PosX < 1 ||
+                position.PosY > 8 || position.PosY < 1)
+                return false;
+
             var pieceInCage = pieces.GetPiece(position);
             if (pieceInCage is not null)
             {

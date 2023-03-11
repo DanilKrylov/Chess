@@ -15,11 +15,10 @@ namespace Chess.Data.Models
         public Guid GameId { get; set; }
 
         public Player WhitePlayer { get; set; }
-
         public Player BlackPlayer { get; set; }
 
         public Color MoveTurn { get; set; }
 
-        public List<PieceDto> Pieces { get; set; } 
+        public List<Piece> Pieces { get; set; }
     }
 }

@@ -1,0 +1,7 @@
+.navBarLink{
+    padding: 15px;
+}
+
+.navBarLink:hover{
+    background-color: white;
+}

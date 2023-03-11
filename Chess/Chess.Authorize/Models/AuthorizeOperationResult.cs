@@ -10,7 +10,7 @@ namespace Chess.Authorize.DtoModels
     {
         public bool Successed { get; set; }
 
-        public JwtInfo JwtInfo { get; set; }
+        public string JwtToken { get; set; }
 
         public Dictionary<string, List<string>> Errors { get; set; } = new Dictionary<string, List<string>>();
 
@@ -19,10 +19,10 @@ namespace Chess.Authorize.DtoModels
             Successed = seccessed;
         }
 
-        public AuthorizeOperationResult(bool seccessed, JwtInfo jwtInfo)
+        public AuthorizeOperationResult(bool seccessed, string jwtInfo)
         {
             Successed = seccessed;
-            JwtInfo = jwtInfo;
+            JwtToken = jwtInfo;
         }
 
         public void AddError(string propertyName, string error)

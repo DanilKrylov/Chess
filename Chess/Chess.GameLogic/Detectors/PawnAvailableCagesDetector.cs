@@ -1,6 +1,5 @@
 ﻿using Chess.Data.Enums;
 using Chess.Data.Models;
-using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
@@ -60,7 +59,7 @@ namespace Chess.GameLogic.Detectors
         private void AddAvailableCageIfPieceColorIsOposite(PiecePositionDto checkingPos, IEnumerable<PieceDto> pieces, IEnumerable<PiecePositionDto> availableCages, Color pawnColor)
         {
             var checkingPiece = pieces.GetPiece(checkingPos);
-            if (checkingPiece.Color == pawnColor.GetOpposite())
+            if (checkingPiece?.Color == pawnColor.GetOpposite())
             {
                 availableCages.Append(checkingPos);
             }

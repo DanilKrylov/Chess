@@ -25,29 +25,21 @@ namespace Chess.Authorize.Services
             _jwtConfiguration = jwtConfiguration.Value;
         }
 
-        public JwtInfo CreateToken(Player user)
+        public string CreateToken(Player user)
         {
-            var expiration = DateTime.UtcNow.AddMinutes(Convert.ToInt32(_jwtConfiguration.ExpirationMinutes));
-
             var token = CreateJwtToken(
                 CreateClaims(user),
-                CreateSigningCredentials(),
-                expiration
+                CreateSigningCredentials()
             );
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            return new JwtInfo
-            {
-                Token = tokenHandler.WriteToken(token),
-                Expiration = expiration
-            };
+            return tokenHandler.WriteToken(token);
         }
 
-        private JwtSecurityToken CreateJwtToken(Claim[] claims, SigningCredentials credentials, DateTime expiration) =>
+        private JwtSecurityToken CreateJwtToken(Claim[] claims, SigningCredentials credentials) =>
             new JwtSecurityToken(
                 claims: claims,
-                expires: expiration,
                 signingCredentials: credentials
             );
 

@@ -1,5 +1,4 @@
-﻿using Chess.GameLogic.DtoModels;
-using Chess.GameLogic.Extensions;
+﻿using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Models;
 
 namespace Chess.GameLogic.Detectors
@@ -8,8 +7,8 @@ namespace Chess.GameLogic.Detectors
     {
         public List<PiecePositionDto> GetAvailableCagesMovingWith(IEnumerable<PieceDto> pieces, PieceDto current, int vertPosDiffKoef, int horPosDiffKoef)
         {
-            var vertPos = current.Position.VerticalPosition + vertPosDiffKoef;
-            var horPos = current.Position.HorizontalPosition + horPosDiffKoef;
+            var vertPos = current.Position.PosY + vertPosDiffKoef;
+            var horPos = current.Position.PosX + horPosDiffKoef;
             var availableCages = new List<PiecePositionDto>();
 
             while (true)

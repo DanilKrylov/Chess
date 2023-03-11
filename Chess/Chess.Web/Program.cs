@@ -1,12 +1,14 @@
 using Chess.IoC;
 using Chess.Web.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 DependencyContainer.RegisterServices(builder.Services, builder.Configuration);
-
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSignalR();
@@ -71,6 +73,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapHub<GameSearchHub>("/gameSearch");
+    endpoints.MapHub<GameLogicHub>("/game");
 });
 
 

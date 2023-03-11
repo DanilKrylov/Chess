@@ -12,9 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chess.Authorize\Chess.Authorize.csproj" />
+    <ProjectReference Include="..\Chess.AutomaperSetup\Chess.AutomaperSetup.csproj" />
     <ProjectReference Include="..\Chess.GameLogic\Chess.GameLogic.csproj" />
     <ProjectReference Include="..\Chess.Store\Chess.Store.csproj" />
-    <ProjectReference Include="..\GamesManagement\GamesManagement.csproj" />
+    <ProjectReference Include="..\GamesManagement\Chess.GamesManagement.csproj" />
   </ItemGroup>
 
 </Project>

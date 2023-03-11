@@ -1,4 +1,5 @@
 ﻿using Chess.Authorize;
+using Chess.AutomaperSetup;
 using Chess.Data.Interfaces;
 using Chess.GameLogic;
 using Chess.GameLogic.Interfaces;
@@ -15,13 +16,12 @@ namespace Chess.IoC
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ChessContext>();
-            services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<IPlayerRepository, PlayerRepository>();
-            services.AddScoped<IPieceRepository, PieceRepository>();
-            GamesManagementServiceRegister.RegisterServices(services, configuration);
             GameLogicServiceRegister.RegisterServices(services);
+            GameLogicServiceRegister.RegisterServices(services);
+            StoreServiceRegister.RegisterServices(services);
+            GamesManagementServiceRegister.RegisterServices(services, configuration);
             AuthorizeServiceRegister.RegisterServices(services, configuration);
+            AutomapperSetupServiceRegister.RegisterServices(services);
         }
     }
 }

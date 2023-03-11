@@ -1,9 +1,7 @@
 ﻿using Chess.Authorize.DtoModels;
 using Chess.Authorize.Interfaces;
-using Chess.Data.Models;
-using Chess.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace Chess.Web.Controllers
 {
@@ -28,6 +26,13 @@ namespace Chess.Web.Controllers
         public async Task<ActionResult> Register([FromBody] RegisterDto registerModel)
         {
             return new JsonResult(await _authorizer.TryRegisterAsync(registerModel));
+        }
+
+        [Authorize]
+        [HttpGet("checkAuth")]
+        public IActionResult Check()
+        {
+            return Ok();
         }
     }
 }

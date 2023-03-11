@@ -1,6 +1,6 @@
 ﻿using Chess.Data.Enums;
 using Chess.Data.Models;
-using Chess.GameLogic.DtoModels;
+using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,6 @@ namespace Chess.GameLogic.Interfaces
 {
     public interface IGameLogicService
     {
-        Task MovePieceAsync(Guid gameId, PiecePositionDto from, PiecePositionDto to);
+        bool TryMovePiece(PieceMoveInfo pieceMoveInfo, string playerEmail, out List<PieceDto> piecesAfterMove);
     }
 }

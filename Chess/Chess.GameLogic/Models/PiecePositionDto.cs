@@ -1,12 +1,7 @@
-﻿using Chess.Data.Enums;
-using Chess.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Text.Json.Serialization;
 
-namespace Chess.GameLogic.DtoModels
+namespace Chess.GameLogic.Models
 {
-    public record PiecePositionDto(int VerticalPosition, int HorizontalPosition);
+    public record PiecePositionDto(int PosY, int PosX);
 }

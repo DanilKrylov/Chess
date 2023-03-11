@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Chess.Authorize.DtoModels
 {
-    public record RegisterDto(string Email, string Password, string ConfirmPassword);
+    public record RegisterDto(string Email, string Password);
 }

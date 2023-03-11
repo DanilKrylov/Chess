@@ -25,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.IoC", "Chess.IoC\Ches
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.Authorize", "Chess.Authorize\Chess.Authorize.csproj", "{C97C97BD-354A-4D6C-A34D-4CED7C05AE9E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesManagement", "GamesManagement\GamesManagement.csproj", "{569C2C5C-88ED-4B65-B5E6-6027097C9862}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.GamesManagement", "GamesManagement\Chess.GamesManagement.csproj", "{569C2C5C-88ED-4B65-B5E6-6027097C9862}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{DC828ACE-B688-4D3D-A029-9CE314A50C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess.AutomaperSetup", "Chess.AutomaperSetup\Chess.AutomaperSetup.csproj", "{47B9D6AF-4720-4D64-B603-ED0BA251CE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.AutomaperSetup", "Chess.AutomaperSetup\Chess.AutomaperSetup.csproj", "{47B9D6AF-4720-4D64-B603-ED0BA251CE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

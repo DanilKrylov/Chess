@@ -1,0 +1,9 @@
+.redirectLinkText{
+    color: #1A237E;
+    margin-top: 35px;
+    font-size: 20px;
+}
+
+.redirectLinkText:hover{
+    text-decoration: underline;
+}

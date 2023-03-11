@@ -8,12 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Chess.IoC\Chess.IoC.csproj" />
-    <ProjectReference Include="..\GamesManagement\GamesManagement.csproj" />
+    <ProjectReference Include="..\GamesManagement\Chess.GamesManagement.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,14 @@
 ﻿using Chess.Data.Models;
+using Chess.GameLogic.Models;
 
 namespace Chess.GameLogic.Interfaces
 {
-    internal interface IRunningGamesService
+    public interface IRunningGamesService
     {
-        bool TryAddRunningGame(Game game);
+        bool TryAddRunningGame(GameDto game);
 
         bool TryRemoveRunningGame(Guid gameId);
 
-        bool TryUpdateRunningGame(Guid gameId, Game game);
-
-        Game GetRunningGame(Guid gameId);
+        GameDto? GetRunningGame(Guid gameId);
     }
 }

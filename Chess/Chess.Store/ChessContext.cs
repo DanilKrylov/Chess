@@ -12,18 +12,20 @@ namespace Chess.Store
     public class ChessContext : IdentityDbContext<Player>
     {
         public DbSet<Game> Games { get; set; }
-        public DbSet<PieceDto> PiecesInGames { get; set; }
+        public DbSet<Piece> PiecesInGames { get; set; }
 
         public ChessContext(DbContextOptions<ChessContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PieceDto>()
+            modelBuilder.Entity<Piece>()
                   .HasKey(model => new { model.GameId, model.HorizontalPosition, model.VerticalPosition });
+
 
             base.OnModelCreating(modelBuilder);
         }

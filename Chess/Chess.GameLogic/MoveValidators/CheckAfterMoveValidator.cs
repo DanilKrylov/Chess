@@ -1,8 +1,4 @@
-﻿using Chess.Data.Enums;
-using Chess.Data.Models;
-using Chess.GameLogic.Detectors;
-using Chess.GameLogic.DtoModels;
-using Chess.GameLogic.Extensions;
+﻿using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
 using System;

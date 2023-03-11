@@ -1,6 +1,5 @@
 ﻿using Chess.Data.Enums;
 using Chess.Data.Models;
-using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
@@ -29,7 +28,7 @@ namespace Chess.GameLogic.MoveValidators
         {
             return _availableCagesValidator.IsMoveInAvailableCages(piecesBeforeMove, piece.Position, to) &&
                    _basicValidator.IsMoveValidOnEmptyBoard(piecesBeforeMove, piece.Position, to) &&
-                   _checkValidator.IsCheckAfterMove(piecesBeforeMove, piece, to);
+                   !_checkValidator.IsCheckAfterMove(piecesBeforeMove, piece, to);
         }
     }
 }

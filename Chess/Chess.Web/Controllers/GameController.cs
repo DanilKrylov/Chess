@@ -1,5 +1,5 @@
-﻿using Chess.Web.ViewModels;
-using GamesManagement.Interfaces;
+﻿using Chess.GamesManagement.Interfaces;
+using Chess.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chess.Web.Controllers
@@ -21,10 +21,10 @@ namespace Chess.Web.Controllers
             return new JsonResult(await _gameStoreService.GetGameAsync(gameId));
         }
 
-        [HttpPost("create")]
-        public async Task<JsonResult> Create([FromBody]GamePlayers playersIdes)
+        /*[HttpPost("create")]
+        public JsonResult Create([FromBody]GamePlayers playersIdes)
         {
-            return new JsonResult(await _gameStoreService.StartNewGameAsync(playersIdes.WhitePlayerEmail, playersIdes.BlackPlayerEmail));
-        }
+            return new JsonResult(_gameStoreService.StartNewGame(playersIdes.WhitePlayerEmail, playersIdes.BlackPlayerEmail));
+        }*/
     }
 }

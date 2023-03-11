@@ -1,5 +1,4 @@
-﻿using Chess.GameLogic.DtoModels;
-using Chess.GameLogic.Extensions;
+﻿using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
 using System;
@@ -19,8 +18,8 @@ namespace Chess.GameLogic.MoveValidators
 
         private bool IsMoveOnBoard(PiecePositionDto to)
         {
-            return to.HorizontalPosition >= 1 && to.VerticalPosition >= 1 &&
-                   to.HorizontalPosition <= 8 && to.VerticalPosition <= 8;
+            return to.PosX >= 1 && to.PosY >= 1 &&
+                   to.PosX <= 8 && to.PosY <= 8;
         }
 
         private bool MoveIsNotOnSpot(PiecePositionDto from, PiecePositionDto to)

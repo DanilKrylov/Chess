@@ -1,5 +1,6 @@
 ﻿using Chess.Data.Models;
 using Chess.GameLogic.Interfaces;
+using Chess.GameLogic.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,15 +13,15 @@ namespace Chess.GameLogic.Services
 {
     internal class RunningGameManager : IRunningGamesService
     {
-        private readonly ConcurrentDictionary<Guid, Game> _games = new();
+        private readonly ConcurrentDictionary<Guid, GameDto> _games = new();
         private readonly Semaphore _semaphore = new Semaphore(1, 1);
 
-        public Game GetRunningGame(Guid gameId)
+        public GameDto? GetRunningGame(Guid gameId)
         {
-            return _games[gameId];
+            return _games.GetValueOrDefault(gameId);
         }
 
-        public bool TryAddRunningGame(Game game)
+        public bool TryAddRunningGame(GameDto game)
         {
             _semaphore.WaitOne();
             var gameExists = GameExist(game.GameId);
@@ -48,7 +49,7 @@ namespace Chess.GameLogic.Services
             return gameExists;
         }
 
-        public bool TryUpdateRunningGame(Guid gameId, Game game)
+        public bool TryUpdateRunningGame(Guid gameId, GameDto game)
         {
             _semaphore.WaitOne();
             var gameExists = GameExist(gameId);

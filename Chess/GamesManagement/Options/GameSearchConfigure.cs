@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamesManagement.Options
+namespace Chess.GamesManagement.Options
 {
     internal class GameSearchConfigure
     {

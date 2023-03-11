@@ -19,11 +19,14 @@ namespace Chess.GameLogic
             availableCagesDetectorBuilder.AddDetector(new PawnAvailableCagesDetector());
 
             services.AddSingleton(typeof(IAvailableCagesDetector), GetBuildedAvailableCagesDetector());
+            services.AddSingleton<ICheckDetector, CheckDetector>();
             services.AddSingleton<IBasicMoveValidator, BasicMoveValidator>();
             services.AddSingleton<ICheckAfterMoveValidator, CheckAfterMoveValidator>();
             services.AddSingleton<IMoveValidator, MoveValidator>();
             services.AddSingleton<IMoveInAvailableCagesValidator, MoveInAvailableCagesValidator>();
+            services.AddSingleton<IRunningGamesService, RunningGameManager>();
             services.AddScoped<IGameLogicService, GameLogicService>();
+            services.AddScoped<IGameCreationService, DefaultGameCreationService>();
         }
 
         private static AvailableCagesDetector GetBuildedAvailableCagesDetector()
@@ -34,11 +37,11 @@ namespace Chess.GameLogic
             var queenDetector = new QueenAvailableCagesDetector(rookDetector, bishopDetector);
             var availableCagesDetectorBuilder = new AvailableCagesDetectorBuilder();
 
-            return availableCagesDetectorBuilder.AddDetector(rookDetector)
+            return availableCagesDetectorBuilder
                         .AddDetector(bishopDetector)
                         .AddDetector(rookDetector)
                         .AddDetector(queenDetector)
-                        .AddDetector(new PawnAvailableCagesDetector())
+                        .AddDetector(new KnightAvailableCagesDetector())
                         .AddDetector(new PawnAvailableCagesDetector())
                         .AddDetector(new KingAvailableCagesDetector())
                         .Build();

@@ -1,12 +1,6 @@
-﻿using Chess.Data.Models;
-using GamesManagement.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Chess.GamesManagement.DtoModels;
 
-namespace GamesManagement.Interfaces
+namespace Chess.GamesManagement.Interfaces
 {
     public interface IGameSearcherService
     {

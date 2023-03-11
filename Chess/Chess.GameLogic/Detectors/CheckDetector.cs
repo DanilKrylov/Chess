@@ -1,5 +1,4 @@
 ﻿using Chess.Data.Enums;
-using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
 using System;

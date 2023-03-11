@@ -1,5 +1,4 @@
 ﻿using Chess.Data.Models;
-using Chess.GameLogic.DtoModels;
 using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;

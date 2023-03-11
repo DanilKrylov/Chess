@@ -1,46 +1,48 @@
 ﻿using Chess.Data.Models;
-using GamesManagement.Interfaces;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Chess.GameLogic.Interfaces;
+using Chess.GamesManagement.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chess.Web.Hubs
 {
+    [Authorize]
     public class GameSearchHub : Hub
     {
         private readonly IGameSearcherService _gameSearcherService;
         private readonly UserManager<Player> _userManager;
+        private readonly IGameCreationService _gameCreationService;
 
-        public GameSearchHub(IGameSearcherService gameSearcherService, UserManager<Player> userManager) 
-        { 
-            _gameSearcherService = gameSearcherService;
+        public GameSearchHub(IGameSearcherService searcherService, UserManager<Player> userManager, IGameCreationService creationService)
+        {
+            _gameSearcherService = searcherService;
             _userManager = userManager;
+            _gameCreationService = creationService;
         }
 
         public async Task StartSearch()
         {
-            await Clients.Caller.SendAsync("Log", new { message = "started" });
             var userEmail = Context.User.Identity.Name;
-            if (userEmail is null)
-            {
-                return;
-            }
 
             var player = await _userManager.FindByEmailAsync(userEmail);
 
-            if(player is null)
-            {
+            if (player is null)
                 return;
-            }
 
+            await Groups.AddToGroupAsync(Context.ConnectionId, userEmail);
             var match = _gameSearcherService.TryGetMatch(userEmail, player.Rating);
 
-            if(!match.IsMathced)
+            if (!match.IsMathced)
             {
                 _gameSearcherService.TryAddPlayerToSearch(userEmail, player.Rating);
-                await Groups.AddToGroupAsync(Context.ConnectionId, userEmail);
                 return;
             }
+
+            var game = await _gameCreationService.StartNewGameAsync(match.WhitePlayerEmail, match.BlackPlayerEmail);
+
+            await Clients.Group(match.WhitePlayerEmail).SendAsync("searchFinish", game);
+            await Clients.Group(match.BlackPlayerEmail).SendAsync("searchFinish", game);
         }
 
         public async Task FinishSearch()
@@ -60,6 +62,7 @@ namespace Chess.Web.Hubs
 
             _gameSearcherService.TryRemovePlayerFromSearch(userEmail);
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, userEmail);
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }

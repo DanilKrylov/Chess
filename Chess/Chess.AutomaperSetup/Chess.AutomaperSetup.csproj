@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chess.Authorize\Chess.Authorize.csproj" />
     <ProjectReference Include="..\Chess.Data\Chess.Data.csproj" />
+    <ProjectReference Include="..\Chess.GameLogic\Chess.GameLogic.csproj" />
   </ItemGroup>
 
 </Project>

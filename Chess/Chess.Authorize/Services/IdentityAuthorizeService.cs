@@ -1,4 +1,5 @@
-﻿using Chess.Authorize.DtoModels;
+﻿using AutoMapper;
+using Chess.Authorize.DtoModels;
 using Chess.Authorize.Interfaces;
 using Chess.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -10,20 +11,21 @@ namespace Chess.Authorize.Services
         private readonly SignInManager<Player> _signInManager;
         private readonly UserManager<Player> _userManager;
         private readonly IJwtService _jwtService;
+        private readonly IMapper _mapper;
 
-        public IdentityAuthorizeService(SignInManager<Player> signInManager, UserManager<Player> userManager, IJwtService jwtService)
+        public IdentityAuthorizeService(SignInManager<Player> signInManager, UserManager<Player> userManager, IJwtService jwtService, IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtService = jwtService;
+            _mapper = mapper;
         }
 
         public async Task<AuthorizeOperationResult> TryLoginAsync(LoginDto loginData)
         {
             var player = await _userManager.FindByEmailAsync(loginData.Email);
-            var signInResult = await _signInManager.CheckPasswordSignInAsync(new Player { UserName = loginData.Email }, loginData.Password, false);
 
-            if(player is null || !signInResult.Succeeded)
+            if(player is null || !(await _signInManager.CheckPasswordSignInAsync(player, loginData.Password, false)).Succeeded)
             {
                 var result = new AuthorizeOperationResult(false);
 

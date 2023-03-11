@@ -1,0 +1,13 @@
+.button{
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    border: 2px solid #1A237E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text{
+
+}

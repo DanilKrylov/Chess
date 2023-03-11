@@ -10,6 +10,6 @@ namespace Chess.Authorize.Interfaces
 {
     internal interface IJwtService
     {
-        JwtInfo CreateToken(Player user);
+        string CreateToken(Player user);
     }
 }
