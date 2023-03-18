@@ -33,7 +33,7 @@ namespace Chess.Web.Hubs
         {
             var result = await _gameLogicService.TryEndGameByCheckMateAsync(gameId);
             if (result.IsEnded)
-                await Clients.Group(gameId.ToString()).SendAsync("finishGame", result);
+                await Clients.Group(gameId.ToString()).SendAsync("finishGame");
         }
 
         public async Task JoinToGame(Guid gameId)
