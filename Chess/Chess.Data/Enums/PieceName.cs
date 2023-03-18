@@ -15,6 +15,6 @@ namespace Chess.Data.Enums
         Knight,
         Bishop,
         Pawn,
-        Rock,
+        Rook,
     }
 }

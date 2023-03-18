@@ -35,11 +35,11 @@
     background-image: url('./img/bB.svg');
 }
 
-.chess-piece.White-Rock {
+.chess-piece.White-Rook {
     background-image: url('./img/wR.svg');
 }
 
-.chess-piece.Black-Rock {
+.chess-piece.Black-Rook {
     background-image: url('./img/bR.svg');
 }
 

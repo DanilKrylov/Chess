@@ -1,7 +1,10 @@
-import { detectCheckmate, movePiece } from "../../http/gameAPI"
+import { detectCheckmate, doCastling, movePiece } from "../../http/gameAPI"
 import { BLACK, WHITE } from "../../utils/colors"
+import { CASTLING_MOVE, DEFAULT_MOVE } from "../../utils/moveTypes"
 import { isCheckMateInPosition } from "./checkDetectors/isCheckMateInPosition"
+import { MoveTypeHelper } from "./helpers/MoveTypeHelper"
 import { PiecesHelper } from "./helpers/PiecesHelper"
+import { castlingIsValid } from "./moveValidation/castlingIsValid"
 import { moveIsValid } from "./moveValidation/moveIsValid"
 
 export const setCurrentGameInfo = (currentGameContext, game, userEmail) => {
@@ -29,26 +32,41 @@ export const setCurrentGameInfo = (currentGameContext, game, userEmail) => {
 
 export const tryMovePieceByPlayer = async (from, to, currentGame, gameId) => {
     const piece = PiecesHelper.getPiece(currentGame.pieces, from)
-    
-    if (currentGame.isEnded || !moveIsValid(currentGame.pieces, piece, to, currentGame.playerRole, currentGame.moveTurn)) {
-        return false
-    }
+    const moveType = MoveTypeHelper.getMoveType(piece, to)
+    switch (moveType) {
+        case DEFAULT_MOVE:
+            if (currentGame.isEnded || !moveIsValid(currentGame.pieces, piece, to, currentGame.playerRole, currentGame.moveTurn)) {
+                return false
+            }
 
-    try {
-        await movePiece(gameId, from, to)
-    }
-    catch {
-        return false
+            try {
+                await movePiece(gameId, from, to)
+            }
+            catch {
+                return false
+            }
+            break
+        case CASTLING_MOVE:
+            if (currentGame.isEnded || !castlingIsValid(currentGame, piece, to)) {
+                return false
+            }
+
+            try {
+                await doCastling(gameId, piece, to)
+            }
+            catch {
+                return false
+            }
+            break
     }
 
     return true
 }
 
 export const tryDetectCheckMate = async (pieces, checkMateToColor, gameId, playerRole) => {
-    if((playerRole !== BLACK && playerRole !== WHITE) || checkMateToColor === playerRole)
+    if ((playerRole !== BLACK && playerRole !== WHITE) || checkMateToColor === playerRole)
         return
 
-    console.log(pieces)
-    if(isCheckMateInPosition(pieces, checkMateToColor))
+    if (isCheckMateInPosition(pieces, checkMateToColor))
         await detectCheckmate(gameId)
 }

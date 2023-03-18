@@ -53,6 +53,7 @@ namespace Chess.GameLogic.Extensions
                 pieces.Remove(toRemovePiece);
             }
 
+            piece.SetIsMoved();
             pieces.Add(piece with { Position = to });
         }
 

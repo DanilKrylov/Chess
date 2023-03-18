@@ -12,5 +12,7 @@ namespace Chess.GameLogic.Interfaces
     internal interface IMoveValidator
     {
         bool MoveIsValid(GameDto game, PieceDto piece, PiecePositionDto to, string playerEmail);
+
+        bool CastlingIsValid(GameDto game, PieceDto king, PieceDto rook, CastlingInfo castlingInfo, string playerEmail);
     }
 }

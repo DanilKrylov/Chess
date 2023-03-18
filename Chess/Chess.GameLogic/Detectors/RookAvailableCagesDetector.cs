@@ -13,7 +13,7 @@ namespace Chess.GameLogic.Detectors
     internal class RookAvailableCagesDetector : IPieceTypeAvailableCagesDetector
     {
         private readonly AvailableCagesHelper _availableCagesHelper;
-        public PieceName PieceName => PieceName.Rock;
+        public PieceName PieceName => PieceName.Rook;
 
         public RookAvailableCagesDetector(AvailableCagesHelper availableCagesHelper)
         {

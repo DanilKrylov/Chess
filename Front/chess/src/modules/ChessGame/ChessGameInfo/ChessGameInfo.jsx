@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react';
 import React, { useContext } from 'react';
-import { Context } from '../..';
-import GamePlayerInfo from '../../components/GamePlayerInfo/GamePlayerInfo';
-import DefaultText from '../../components/UI/Texts/DefaultText/DefaultText';
+import { Context } from '../../..';
+import GamePlayerInfo from '../../../components/GamePlayerInfo/GamePlayerInfo';
+import DefaultText from '../../../components/UI/Texts/DefaultText/DefaultText';
 import classes from './ChessGameInfo.module.css'
 
 const ChessGameInfo = observer(() => {

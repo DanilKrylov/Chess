@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Chess.GameLogic.Services
 {
-    internal class GameLogicService : IGameLogicService
+    internal class GameEnderService : IGameEnderService
     {
         private readonly IMoveValidator _moveValidator;
         private readonly IRunningGamesService _runningGamesService;
         private readonly ICheckMateDetector _checkMateDetector;
         private readonly IGameUpdaterService _gameUpdaterService;
 
-        public GameLogicService(IMoveValidator moveValidator, IRunningGamesService runningGamesService, ICheckMateDetector checkMateDetector, IGameUpdaterService gameUpdaterService)
+        public GameEnderService(IMoveValidator moveValidator, IRunningGamesService runningGamesService, ICheckMateDetector checkMateDetector, IGameUpdaterService gameUpdaterService)
         {
             _moveValidator = moveValidator;
             _runningGamesService = runningGamesService;
@@ -46,25 +46,6 @@ namespace Chess.GameLogic.Services
                 await EndGame(gameId, result);
 
             return result;
-        }
-
-        public bool TryMovePiece(PieceMoveInfo pieceMoveInfo, string playerEmail, out GameDto gameAfterMove)
-        {
-            gameAfterMove = null;
-            var game = _runningGamesService.GetRunningGame(pieceMoveInfo.GameId);
-            if (game is null)
-                return false;
-
-            var pieces = game.Pieces;
-            var piece = pieces.GetPiece(pieceMoveInfo.From);
-
-            if (piece is null || !_moveValidator.MoveIsValid(game, piece, pieceMoveInfo.To, playerEmail))
-                return false;
-
-            game.Pieces.MovePiece(piece, pieceMoveInfo.To);
-            game.ChangeMoveTurn();
-            gameAfterMove = game;
-            return true;
         }
 
         private async Task EndGame(Guid gameId, GameResultInfo result)

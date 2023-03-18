@@ -26,9 +26,10 @@ namespace Chess.GameLogic
             services.AddSingleton<IRunningGamesService, RunningGameManager>();
             services.AddSingleton<ICheckMateDetector, CheckMateDetector>();
             services.AddSingleton<IGameSearcherService, GameSearcherService>();
+            services.AddSingleton<IPieceMoverService, PieceMoverService>();
 
             services.AddScoped<IGameUpdaterService, GameUpdaterService>();
-            services.AddScoped<IGameLogicService, GameLogicService>();
+            services.AddScoped<IGameEnderService, GameEnderService>();
             services.AddScoped<IGameCreationService, DefaultGameCreationService>();
             services.AddScoped<IGameStoreService, GameStoreService>();
             services.Configure<GameSearchConfigure>(configuration.GetSection("GameSearchConfigure"));

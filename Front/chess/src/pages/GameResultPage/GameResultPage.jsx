@@ -1,6 +1,6 @@
 import React from 'react';
 import MainWrapper from '../../components/MainWrapper/MainWrapper';
-import ChessGameInfo from '../../modules/ChessGameInfo/ChessGameInfo';
+import ChessGameInfo from '../../modules/ChessGame/ChessGameInfo/ChessGameInfo';
 import GameResult from '../../modules/GameResult/GameResult';
 
 const GameResultPage = () => {

@@ -78,7 +78,7 @@ namespace Chess.GameLogic.Services
                 {
                     PosX = horizontalPosition,
                     PosY = 1,
-                    Name = PieceName.Rock,
+                    Name = PieceName.Rook,
                     Color = Color.White,
                 });
 
@@ -86,7 +86,7 @@ namespace Chess.GameLogic.Services
                 {
                     PosX = horizontalPosition,
                     PosY = 8,
-                    Name = PieceName.Rock,
+                    Name = PieceName.Rook,
                     Color = Color.Black,
                 });
             }

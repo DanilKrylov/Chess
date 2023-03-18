@@ -18,6 +18,11 @@ namespace Chess.GameLogic.MoveValidators
                    IsMoveOnBoard(to) && MoveIsNotOnSpot(from, to);
         }
 
+        public bool IsCastlingValidOnEmptyBoard(GameDto game, string playerEmail)
+        {
+            return PlayerCanDoMove(game, playerEmail);
+        }
+
         private bool IsMoveOnBoard(PiecePositionDto to)
         {
             return to.PosX >= 1 && to.PosY >= 1 &&

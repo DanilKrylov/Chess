@@ -22,6 +22,7 @@ const ChessGame = observer(() => {
     }
 
     function onGameIsNotDefined(){
+        console.log('not def')
         navigate("/gameInfo/" + gameId)
     }
 
@@ -33,6 +34,7 @@ const ChessGame = observer(() => {
     }
 
     function finishGame() {
+        console.log('finish')
         navigate("/gameInfo/" + gameId)
     }
 
