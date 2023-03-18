@@ -19,6 +19,12 @@ namespace Chess.Data.Models
 
         public Color MoveTurn { get; set; }
 
+        public bool IsEnded { get; set; } = false;
+
+        public bool IsDraw { get; set; } = false;
+
+        public string WinnerPlayerEmail { get; set; } = string.Empty;
+
         public List<Piece> Pieces { get; set; }
     }
 }

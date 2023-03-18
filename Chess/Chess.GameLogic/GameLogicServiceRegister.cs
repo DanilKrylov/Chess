@@ -1,7 +1,9 @@
 ﻿using Chess.GameLogic.Detectors;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.MoveValidators;
+using Chess.GameLogic.Options;
 using Chess.GameLogic.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,8 @@ namespace Chess.GameLogic
 {
     public static class GameLogicServiceRegister
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            var availableCagesDetectorBuilder = new AvailableCagesDetectorBuilder();
-            availableCagesDetectorBuilder.AddDetector(new PawnAvailableCagesDetector());
-
             services.AddSingleton(typeof(IAvailableCagesDetector), GetBuildedAvailableCagesDetector());
             services.AddSingleton<ICheckDetector, CheckDetector>();
             services.AddSingleton<IBasicMoveValidator, BasicMoveValidator>();
@@ -25,8 +24,14 @@ namespace Chess.GameLogic
             services.AddSingleton<IMoveValidator, MoveValidator>();
             services.AddSingleton<IMoveInAvailableCagesValidator, MoveInAvailableCagesValidator>();
             services.AddSingleton<IRunningGamesService, RunningGameManager>();
+            services.AddSingleton<ICheckMateDetector, CheckMateDetector>();
+            services.AddSingleton<IGameSearcherService, GameSearcherService>();
+
+            services.AddScoped<IGameUpdaterService, GameUpdaterService>();
             services.AddScoped<IGameLogicService, GameLogicService>();
             services.AddScoped<IGameCreationService, DefaultGameCreationService>();
+            services.AddScoped<IGameStoreService, GameStoreService>();
+            services.Configure<GameSearchConfigure>(configuration.GetSection("GameSearchConfigure"));
         }
 
         private static AvailableCagesDetector GetBuildedAvailableCagesDetector()

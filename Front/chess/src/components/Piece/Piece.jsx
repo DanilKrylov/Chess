@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Piece.css'
+import { observer } from 'mobx-react';
+import { Context } from '../..';
 
-const Piece = (props) => {
-    const { pieceInfo, setTargetFigure, canMove, fromColor, onMove } = props;
-    const [viewPos, setViewPos] = useState(pieceInfo.position)
+const Piece = observer(({pieceIdentifier, tryMove, setTargetFigure}) => {
+    const {currentGame} = useContext(Context)
+    const piece = currentGame.getPiece(pieceIdentifier);
     const [isHandled, setIsHandled] = useState(false);
-    const [validPos, setValidPos] = useState(pieceInfo.position);
 
     function handleClick(event) {
         if (event.button !== 0) {
@@ -13,17 +14,17 @@ const Piece = (props) => {
         }
         
         if (isHandled) {
-            setViewPos({ ...validPos })
+            currentGame.setViewPosAsValidPos(pieceIdentifier);
             setIsHandled(false)
-            setTargetFigure(undefined)
+            setTargetFigure(false)
             return
         }
 
         setIsHandled(true)
-        setTargetFigure({setViewPos})
+        setTargetFigure({pieceIdentifier: pieceIdentifier, unhandleClick: () => setIsHandled(false)})
     }
 
-    async function unhandleClick(event) {
+    async function unhandleClick() {
         if (!isHandled) {
             return
         }
@@ -32,33 +33,28 @@ const Piece = (props) => {
         setIsHandled(false)
 
         const newPos = {
-            posX: Math.round(viewPos.posX),
-            posY: Math.round(viewPos.posY)
+            posX: Math.round(piece.position.posX),
+            posY: Math.round(piece.position.posY)
         }
 
-        if (canMove(validPos, newPos)) {
-            await onMove(validPos, newPos)
-            setViewPos(newPos)
-            setValidPos(newPos)
-        }
-        else {
-            setViewPos({ ...validPos })
+        if (!await tryMove(piece.validPosition, newPos)) {
+            currentGame.setViewPosAsValidPos(pieceIdentifier)
         }
     }
 
     return (
         <div
             key={Math.random()}
-            className={`chess-piece ${pieceInfo.color}-${pieceInfo.name}`}
+            className={['chess-piece', piece.color + '-' + piece.name, isHandled && 'handled'].join(' ')}
             onMouseDown={handleClick}
             onMouseUp={unhandleClick}
             style={{
-                transform: fromColor === 'black' ? 
-                    `translate(${(8 - viewPos.posX) * 100}%, ${(viewPos.posY - 1) * 100}%)` :
-                    `translate(${(viewPos.posX - 1) * 100}%, ${(8 - viewPos.posY) * 100}%)`                 
+                transform: currentGame.playerRole === 'Black' ? 
+                    `translate(${(8 - piece.position.posX) * 100}%, ${(piece.position.posY - 1) * 100}%)` :
+                    `translate(${(piece.position.posX - 1) * 100}%, ${(8 - piece.position.posY) * 100}%)`                 
             }}
         ></div>
     );
-};
+});
 
 export default Piece;

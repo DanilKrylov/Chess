@@ -1,0 +1,25 @@
+.playerInfo{
+    width: 100%;
+    border-top: 2px solid #1A237E;
+	border-bottom: 2px solid #1A237E;
+    background-color: #E0E0E0;
+	box-sizing: content-box;
+}
+
+.onMoveTurn{
+    background-size: 400% 400%;
+    background-image: linear-gradient(-45deg, #71f6b6, #f0f0f0);
+    animation: gradient 2.5s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chess.IoC\Chess.IoC.csproj" />
-    <ProjectReference Include="..\GamesManagement\Chess.GamesManagement.csproj" />
   </ItemGroup>
 
 </Project>

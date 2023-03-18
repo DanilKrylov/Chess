@@ -1,0 +1,6 @@
+export const PAWN = "Pawn"
+export const KING = "King"
+export const QUEEN = "Queen"
+export const ROCK = "Rock"
+export const BISHOP = "Bishop"
+export const KNIGHT = "Knight"

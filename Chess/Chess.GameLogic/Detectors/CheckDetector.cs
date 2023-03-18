@@ -33,6 +33,7 @@ namespace Chess.GameLogic.Detectors
 
             return false;
         }
+
         private bool KingInEnemyAvailableCages(List<PiecePositionDto> cages, PieceDto king)
         {
             return cages.Any(cage => cage == king.Position);

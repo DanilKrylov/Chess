@@ -24,7 +24,7 @@ namespace Chess.Store
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Piece>()
-                  .HasKey(model => new { model.GameId, model.HorizontalPosition, model.VerticalPosition });
+                  .HasKey(model => new { model.GameId, model.PosX, model.PosY });
 
 
             base.OnModelCreating(modelBuilder);

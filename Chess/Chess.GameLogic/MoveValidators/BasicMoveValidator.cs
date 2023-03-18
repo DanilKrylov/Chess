@@ -1,4 +1,5 @@
-﻿using Chess.GameLogic.Extensions;
+﻿using Chess.Data.Enums;
+using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
 using System;
@@ -11,9 +12,10 @@ namespace Chess.GameLogic.MoveValidators
 {
     internal class BasicMoveValidator : IBasicMoveValidator
     {
-        public bool IsMoveValidOnEmptyBoard(IEnumerable<PieceDto> pieces, PiecePositionDto from, PiecePositionDto to)
+        public bool IsMoveValidOnEmptyBoard(GameDto game, PiecePositionDto from, PiecePositionDto to, string playerEmail)
         {
-            return IsMoveOnBoard(to) && MoveIsNotOnSpot(from, to) && IsPieceOnStartPosition(pieces, from);
+            return PlayerCanDoMove(game, playerEmail) && IsMoveAvailablePiece(game, from, playerEmail) && 
+                   IsMoveOnBoard(to) && MoveIsNotOnSpot(from, to);
         }
 
         private bool IsMoveOnBoard(PiecePositionDto to)
@@ -22,14 +24,26 @@ namespace Chess.GameLogic.MoveValidators
                    to.PosX <= 8 && to.PosY <= 8;
         }
 
+        private bool IsMoveAvailablePiece(GameDto game, PiecePositionDto from, string playerEmail)
+        {
+            var piece = game.Pieces.GetPiece(from);
+
+            if(piece == null)
+                return false;
+
+            return playerEmail == game.WhitePlayerEmail && piece.Color == Color.White ||
+                   playerEmail == game.BlackPlayerEmail && piece.Color == Color.Black;
+        }
+
         private bool MoveIsNotOnSpot(PiecePositionDto from, PiecePositionDto to)
         {
             return from != to;
         }
 
-        private bool IsPieceOnStartPosition(IEnumerable<PieceDto> pieces, PiecePositionDto from)
+        private bool PlayerCanDoMove(GameDto game, string playerEmail)
         {
-            return pieces.PieceExists(from);
+            return game.MoveTurn == Color.White && game.WhitePlayerEmail == playerEmail ||
+                   game.MoveTurn == Color.Black && game.BlackPlayerEmail == playerEmail;
         }
     }
 }

@@ -34,11 +34,10 @@ namespace Chess.GameLogic.Detectors
                     if (currentHorPos > 8 || currentHorPos < 1 || currentVertPos > 8 || currentVertPos < 1)
                         continue;
 
-                    var currentPosition = new PiecePositionDto(vertPos, horPos);
+                    var currentPosition = new PiecePositionDto(currentVertPos, currentHorPos);
                     var pieceOnCage = pieces.GetPiece(currentPosition);
                     if (pieceOnCage is null || pieceOnCage.Color != king.Color)
-                        availableCages.Add(position);
-
+                        availableCages.Add(currentPosition);
                 }
             }
 

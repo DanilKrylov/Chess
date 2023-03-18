@@ -2,13 +2,9 @@
 using Chess.Data.Interfaces;
 using Chess.Data.Models;
 using Chess.GameLogic.Interfaces;
+using Chess.GameLogic.Mappers;
 using Chess.GameLogic.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.GameLogic.Services
 {
@@ -45,8 +41,8 @@ namespace Chess.GameLogic.Services
             };
 
             await _gameRepository.AddGameAsync(game);
-            var pieceDtos = pieces.Select(c => new PieceDto(new PiecePositionDto(c.VerticalPosition, c.HorizontalPosition), c.Color, c.Name)).ToList();
-            var gameDto = new GameDto(game.GameId, game.WhitePlayer.Email, game.BlackPlayer.Email, pieceDtos);
+
+            var gameDto = GameMapper.MapToGameDto(game);
             _runningGamesService.TryAddRunningGame(gameDto);
 
             return gameDto;
@@ -58,16 +54,16 @@ namespace Chess.GameLogic.Services
             {
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 2,
+                    PosX = horizontalPosition,
+                    PosY = 2,
                     Name = PieceName.Pawn,
                     Color = Color.White,
                 });
 
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 7,
+                    PosX = horizontalPosition,
+                    PosY = 7,
                     Name = PieceName.Pawn,
                     Color = Color.Black,
                 });
@@ -80,16 +76,16 @@ namespace Chess.GameLogic.Services
             {
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 1,
+                    PosX = horizontalPosition,
+                    PosY = 1,
                     Name = PieceName.Rock,
                     Color = Color.White,
                 });
 
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 8,
+                    PosX = horizontalPosition,
+                    PosY = 8,
                     Name = PieceName.Rock,
                     Color = Color.Black,
                 });
@@ -102,16 +98,16 @@ namespace Chess.GameLogic.Services
             {
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 1,
+                    PosX = horizontalPosition,
+                    PosY = 1,
                     Name = PieceName.Knight,
                     Color = Color.White,
                 });
 
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 8,
+                    PosX = horizontalPosition,
+                    PosY = 8,
                     Name = PieceName.Knight,
                     Color = Color.Black,
                 });
@@ -124,16 +120,16 @@ namespace Chess.GameLogic.Services
             {
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 1,
+                    PosX = horizontalPosition,
+                    PosY = 1,
                     Name = PieceName.Bishop,
                     Color = Color.White,
                 });
 
                 pieceList.Add(new Piece()
                 {
-                    HorizontalPosition = horizontalPosition,
-                    VerticalPosition = 8,
+                    PosX = horizontalPosition,
+                    PosY = 8,
                     Name = PieceName.Bishop,
                     Color = Color.Black,
                 });
@@ -144,16 +140,16 @@ namespace Chess.GameLogic.Services
         {
             pieceList.Add(new Piece()
             {
-                HorizontalPosition = 5,
-                VerticalPosition = 1,
+                PosX = 5,
+                PosY = 1,
                 Name = PieceName.King,
                 Color = Color.White,
             });
 
             pieceList.Add(new Piece()
             {
-                HorizontalPosition = 5,
-                VerticalPosition = 8,
+                PosX = 5,
+                PosY = 8,
                 Name = PieceName.King,
                 Color = Color.Black,
             });
@@ -163,16 +159,16 @@ namespace Chess.GameLogic.Services
         {
             pieceList.Add(new Piece()
             {
-                HorizontalPosition = 4,
-                VerticalPosition = 1,
+                PosX = 4,
+                PosY = 1,
                 Name = PieceName.Queen,
                 Color = Color.White,
             });
 
             pieceList.Add(new Piece()
             {
-                HorizontalPosition = 4,
-                VerticalPosition = 8,
+                PosX = 4,
+                PosY = 8,
                 Name = PieceName.Queen,
                 Color = Color.Black,
             });

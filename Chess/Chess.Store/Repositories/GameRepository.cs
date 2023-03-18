@@ -30,7 +30,11 @@ namespace Chess.Store.Repositories
 
         public Task<Game> GetGameAsync(Guid gameId)
         {
-            return _db.Games.Include(c => c.Pieces).FirstAsync(c => c.GameId == gameId);
+            return _db.Games
+                .Include(c => c.Pieces)
+                .Include(c => c.BlackPlayer)
+                .Include(c => c.WhitePlayer)
+                .FirstAsync(c => c.GameId == gameId);
         }
 
         public async Task UpdateGameAsync(Game game, Guid gameId)

@@ -3,6 +3,11 @@
     width: 50px;
     height: 50px;
     background-size: cover;
+    transition: all 0.3s;
+}
+
+.handled{
+    z-index: 100;
 }
 
 .chess-piece.White-Pawn {

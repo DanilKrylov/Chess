@@ -1,5 +1,5 @@
 import React from 'react';
-import { MAIN_ROUTE } from '../../utils/consts';
+import { MAIN_ROUTE } from '../../utils/routes';
 import Flex from '../UI/Flex/Flex';
 import NavBarLink from '../UI/Links/NavBarLink/NavBarLink';
 

@@ -56,12 +56,12 @@ namespace Chess.GameLogic.Detectors
             return 7;
         }
 
-        private void AddAvailableCageIfPieceColorIsOposite(PiecePositionDto checkingPos, IEnumerable<PieceDto> pieces, IEnumerable<PiecePositionDto> availableCages, Color pawnColor)
+        private void AddAvailableCageIfPieceColorIsOposite(PiecePositionDto checkingPos, IEnumerable<PieceDto> pieces, List<PiecePositionDto> availableCages, Color pawnColor)
         {
             var checkingPiece = pieces.GetPiece(checkingPos);
             if (checkingPiece?.Color == pawnColor.GetOpposite())
             {
-                availableCages.Append(checkingPos);
+                availableCages.Add(checkingPos);
             }
         }
     }

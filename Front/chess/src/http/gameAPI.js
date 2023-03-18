@@ -1,9 +1,9 @@
 import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr"
+import { $host } from ".";
 
 let hubConnection;
-let onMoveByApponent;
 
-export const joinToGameHub = async (onOpponentMove, gameInfoSetter, gameId) => {
+export const joinToGameHub = async (gameInfoSet, finishGame, gameId, onGameIsNotDefined) => {
     hubConnection = new HubConnectionBuilder()
         .withUrl(process.env.REACT_APP_API_URL + "game", {
             skipNegotiation: true,
@@ -12,21 +12,29 @@ export const joinToGameHub = async (onOpponentMove, gameInfoSetter, gameId) => {
         })
         .build()
     
-    hubConnection.on("movePiece", (pieces) => {
-        onMoveByApponent(pieces)
-    })
+    hubConnection.on("movePiece", gameInfoSet)
+    hubConnection.on("setGame", gameInfoSet)
+    hubConnection.on('finishGame', (result) => finishGame(result))
 
-    hubConnection.on("setGame", gameInfoSetter)
     await hubConnection.start()
-    await hubConnection.invoke("JoinToGame", gameId)
+    try{
+        await hubConnection.invoke("JoinToGame", gameId)
+    }
+    catch{
+        onGameIsNotDefined()
+    }
 } 
 
 export const movePiece = async (gameId, from, to) => {
     await hubConnection.invoke('MovePiece', {gameId: gameId, from: from, to: to})
 }
 
-export const setOnMoveByApponent = (func) => {
-    onMoveByApponent = func
-} 
+export const detectCheckmate = async (gameId) => {
+    await hubConnection.invoke('DetectCheckMate', gameId)
+}
 
-export const leftGameHub = () => console.log(hubConnection)
+export const leftGameHub = () => hubConnection.stop()
+
+export const getGameInfo = async (gameId) => {
+    return (await $host.get('api/gamestore/gameInfo/' + gameId)).data
+}

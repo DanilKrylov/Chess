@@ -4,11 +4,12 @@ import { observer } from 'mobx-react'
 import NavBar from "./pages/NavBar/NavBar";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import MainPage from "./pages/MainPage/MainPage";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, GAME_ROUTE } from "./utils/consts";
+import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, GAME_ROUTE, GAMEINFO_ROUTE } from "./utils/routes";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { Context } from ".";
 import { check } from './http/userAPI'
 import ChessGamePage from "./pages/ChessGamePage/ChessGamePage";
+import GameResultPage from "./pages/GameResultPage/GameResultPage";
 
 const App = observer(() => {
   const {userInfo} = useContext(Context)
@@ -35,6 +36,7 @@ const App = observer(() => {
         <Route path={LOGIN_ROUTE} element={<LoginPage></LoginPage>}></Route>
         <Route path={MAIN_ROUTE} element={<MainPage></MainPage>}></Route>
         <Route path={GAME_ROUTE} element={<ChessGamePage></ChessGamePage>}></Route>
+        <Route path={GAMEINFO_ROUTE} element={<GameResultPage></GameResultPage>}></Route>
       </Routes>
     </BrowserRouter>
   );

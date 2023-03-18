@@ -24,11 +24,11 @@ namespace Chess.GameLogic.MoveValidators
             _basicValidator = basicValidator;
         }
 
-        public bool MoveIsValid(IEnumerable<PieceDto> piecesBeforeMove, PieceDto piece, PiecePositionDto to)
+        public bool MoveIsValid(GameDto game, PieceDto piece, PiecePositionDto to, string playerEmail)
         {
-            return _availableCagesValidator.IsMoveInAvailableCages(piecesBeforeMove, piece.Position, to) &&
-                   _basicValidator.IsMoveValidOnEmptyBoard(piecesBeforeMove, piece.Position, to) &&
-                   !_checkValidator.IsCheckAfterMove(piecesBeforeMove, piece, to);
+            return _basicValidator.IsMoveValidOnEmptyBoard(game, piece.Position, to, playerEmail) &&
+                    _availableCagesValidator.IsMoveInAvailableCages(game.Pieces, piece.Position, to) &&
+                   !_checkValidator.IsCheckAfterMove(game.Pieces, piece, to);
         }
     }
 }

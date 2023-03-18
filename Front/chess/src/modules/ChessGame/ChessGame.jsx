@@ -1,43 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import React, { useContext, useEffect} from 'react';
 import ChessBoard from '../../components/ChessBoard/ChessBoard';
-import { PieceInfo } from '../../components/Piece/PieceInfo';
-import { joinToGameHub, leftGameHub, movePiece, setOnMoveByApponent} from '../../http/gameAPI';
+import { joinToGameHub, leftGameHub} from '../../http/gameAPI';
+import { Context } from '../..';
+import { setCurrentGameInfo, tryDetectCheckMate, tryMovePieceByPlayer } from './chessLogic';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ChessGame = () => {
-    const [pieces, setPieces] = useState([])
+const ChessGame = observer(() => {
+    const {currentGame, userInfo} = useContext(Context)
+    const {gameId} = useParams()
+    const navigate =  useNavigate()
+
     useEffect(() => {
-        joinToGameHub(onMoveByApponent, gameInfoSetter, localStorage.getItem('game'))
-        return leftGameHub()
+        joinToGameHub(gameInfoSetter, finishGame, gameId, onGameIsNotDefined)
+        return onComponentDestruct
     }, [])
 
-    useEffect(() => {
-        setOnMoveByApponent(onMoveByApponent)
-    })
+    async function onComponentDestruct(){
+        await leftGameHub()
+        currentGame.clear()
+    }
+
+    function onGameIsNotDefined(){
+        navigate("/gameInfo/" + gameId)
+    }
 
     function gameInfoSetter(game){
-        console.log(game)
-        setPieces(game.pieces)
+        const userEmail = userInfo.user.email
+        setCurrentGameInfo(currentGame, game, userEmail)
+        if(!currentGame.isEnded)
+            tryDetectCheckMate(currentGame.pieces, currentGame.moveTurn, gameId, currentGame.playerRole)
     }
 
-    function onMoveByApponent(p){
-        console.log([...p]);
-        setPieces(prevPieces =>
-            prevPieces.map(piece => {
-              const updatedPiece = p.find(newPiece => newPiece.pieceIdentifier === piece.pieceIdentifier && 
-                                        (newPiece.posX !== piece.posX || newPiece.posY !== piece.posY));
-              return updatedPiece || piece;
-            })
-          );
+    function finishGame() {
+        navigate("/gameInfo/" + gameId)
     }
 
-    async function movePieceByPlayer(from, to){
-        await movePiece(localStorage.getItem('game'), from, to)
+    async function tryMove(from, to){
+        return await tryMovePieceByPlayer(from, to, currentGame, gameId)
     }
-
 
     return (
-        <ChessBoard pieces={pieces} cageWidth={50} fromColor='White' canMove={() => true} onMove = {movePieceByPlayer}></ChessBoard>
+        <ChessBoard cageWidth={50} tryMove = {tryMove} currentGame = {currentGame}></ChessBoard>
     );
-};
+});
 
 export default ChessGame;

@@ -5,7 +5,7 @@ import FormWrapper from '../../components/UI/FormWrappers/FormWrapper/FormWrappe
 import HeadText from '../../components/UI/Texts/HeadText/HeadText';
 import RedirectLink from '../../components/UI/Links/RedirectLink/RedirectLink';
 import { loginUser } from './authorize'
-import { MAIN_ROUTE } from '../../utils/consts';
+import { MAIN_ROUTE } from '../../utils/routes';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../..';

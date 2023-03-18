@@ -7,7 +7,7 @@ import SubmitButton from '../../components/UI/Buttons/SubmitButton/SubmitButton'
 import FormWrapper from '../../components/UI/FormWrappers/FormWrapper/FormWrapper';
 import RedirectLink from '../../components/UI/Links/RedirectLink/RedirectLink';
 import HeadText from '../../components/UI/Texts/HeadText/HeadText';
-import { MAIN_ROUTE } from '../../utils/consts';
+import { MAIN_ROUTE } from '../../utils/routes';
 import { registerUser } from './authorize';
 
 const RegistrationForm = observer(() => {

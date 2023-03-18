@@ -11,25 +11,29 @@ namespace Chess.Web.Hubs
     {
         private readonly IGameLogicService _gameLogicService;
         private readonly IRunningGamesService _runningGamesService;
+        private readonly ICheckMateDetector _checkMateDetector;
 
-        public GameLogicHub(IGameLogicService gameLogicService, IRunningGamesService runningGamesService)
+        public GameLogicHub(IGameLogicService gameLogicService, IRunningGamesService runningGamesService, ICheckMateDetector checkMateDetector)
         {
             _gameLogicService = gameLogicService;
             _runningGamesService = runningGamesService;
+            _checkMateDetector = checkMateDetector;
         }
 
         public async Task MovePiece(PieceMoveInfo pieceMoveInfo)
         {
             var playerEmail = Context.User.Identity.Name;
-            if (!_gameLogicService.TryMovePiece(pieceMoveInfo, playerEmail, out var pieces))
-                return;
+            if (!_gameLogicService.TryMovePiece(pieceMoveInfo, playerEmail, out var game))
+                throw new ArgumentException();
 
-            await Clients.Group(pieceMoveInfo.GameId.ToString()).SendAsync("movePiece", pieces);
+            await Clients.Group(pieceMoveInfo.GameId.ToString()).SendAsync("movePiece", game);
         }
 
-        public async override Task OnConnectedAsync()
+        public async Task DetectCheckMate(Guid gameId)
         {
-            await base.OnConnectedAsync();
+            var result = await _gameLogicService.TryEndGameByCheckMateAsync(gameId);
+            if (result.IsEnded)
+                await Clients.Group(gameId.ToString()).SendAsync("finishGame", result);
         }
 
         public async Task JoinToGame(Guid gameId)

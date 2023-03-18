@@ -13,9 +13,9 @@ namespace Chess.Data.Models
     {
         public Guid GameId { get; set; }
 
-        public int HorizontalPosition { get; set; }
+        public int PosX { get; set; }
 
-        public int VerticalPosition { get; set; }
+        public int PosY { get; set; }
 
         public PieceName Name { get; set; }
 

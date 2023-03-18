@@ -1,10 +1,11 @@
 import React, {useContext} from 'react';
-import { REGISTRATION_ROUTE, LOGIN_ROUTE } from '../../utils/consts';
+import { REGISTRATION_ROUTE, LOGIN_ROUTE } from '../../utils/routes';
 import { Context } from '../..';
 import NavBarLink from '../UI/Links/NavBarLink/NavBarLink';
 import NavBarButton from '../UI/Buttons/NavBarButton/NavBarButton';
 import { observer } from 'mobx-react';
 import Flex from '../UI/Flex/Flex';
+import DefaultText from '../UI/Texts/DefaultText/DefaultText';
 
 const UserInfo = observer(() => {
     const { userInfo } = useContext(Context)
@@ -18,7 +19,7 @@ const UserInfo = observer(() => {
     if (userInfo.isAuth) {
         return (
             <Flex>
-                {userInfo.user.email}
+                <DefaultText text={userInfo.user.email}></DefaultText>
                 <NavBarButton text="Logout" onClick={logout}></NavBarButton>
             </Flex>
         )

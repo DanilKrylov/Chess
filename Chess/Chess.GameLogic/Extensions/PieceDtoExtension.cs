@@ -29,12 +29,12 @@ namespace Chess.GameLogic.Extensions
         {
             var piece = pieces.GetPiece(from);
 
-            if(pieces is null)
+            if (pieces is null || piece is null)
             {
                 throw new ArgumentException();
             }
 
-            var resultPieces = pieces.WithoutPiece(from).ToList();
+            var resultPieces = pieces.WithoutPiece(from).WithoutPiece(to).ToList();
             resultPieces.Add(piece with { Position = to });
 
             return resultPieces;
@@ -47,8 +47,13 @@ namespace Chess.GameLogic.Extensions
                 throw new ArgumentException();
             }
 
-            pieces.Remove(piece);
-            pieces.Add(piece with { Position =  to });
+            var toRemovePieces = pieces.Where(p => p.Position == to || p.Position == piece.Position).ToList();
+            foreach (var toRemovePiece in toRemovePieces)
+            {
+                pieces.Remove(toRemovePiece);
+            }
+
+            pieces.Add(piece with { Position = to });
         }
 
         public static bool CanBeSetedToPosition(this IEnumerable<PieceDto> pieces, PiecePositionDto position, Color pieceColor, out bool isEnemyOnCage)

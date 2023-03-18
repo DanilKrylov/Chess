@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Chess.Authorize.DtoModels;
+﻿using Chess.Authorize.DtoModels;
 using Chess.Authorize.Interfaces;
 using Chess.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -11,14 +10,12 @@ namespace Chess.Authorize.Services
         private readonly SignInManager<Player> _signInManager;
         private readonly UserManager<Player> _userManager;
         private readonly IJwtService _jwtService;
-        private readonly IMapper _mapper;
 
-        public IdentityAuthorizeService(SignInManager<Player> signInManager, UserManager<Player> userManager, IJwtService jwtService, IMapper mapper)
+        public IdentityAuthorizeService(SignInManager<Player> signInManager, UserManager<Player> userManager, IJwtService jwtService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtService = jwtService;
-            _mapper = mapper;
         }
 
         public async Task<AuthorizeOperationResult> TryLoginAsync(LoginDto loginData)

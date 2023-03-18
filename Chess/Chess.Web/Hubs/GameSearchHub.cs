@@ -1,6 +1,5 @@
 ﻿using Chess.Data.Models;
 using Chess.GameLogic.Interfaces;
-using Chess.GamesManagement.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;

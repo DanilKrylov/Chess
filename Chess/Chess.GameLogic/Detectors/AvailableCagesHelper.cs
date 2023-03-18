@@ -13,15 +13,15 @@ namespace Chess.GameLogic.Detectors
 
             while (true)
             {
-                if (vertPos < 1 || vertPos > 8 || horPos < 1 || horPos > 8)
-                    return availableCages;
+                /*if (vertPos < 1 || vertPos > 8 || horPos < 1 || horPos > 8)
+                    return availableCages;*/
 
                 var checkedPos = new PiecePositionDto(vertPos, horPos);
                 var canBeSetedToPos = pieces.CanBeSetedToPosition(checkedPos, current.Color, out bool isEnemyOnCage);
                 if (canBeSetedToPos)
                     availableCages.Add(checkedPos);
 
-                if (!canBeSetedToPos || !isEnemyOnCage)
+                if (!canBeSetedToPos || isEnemyOnCage)
                     return availableCages;
 
                 vertPos += vertPosDiffKoef;
