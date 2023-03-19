@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './Piece.css'
 import { observer } from 'mobx-react';
 import { Context } from '../..';
+import { BLACK } from '../../utils/colors';
 
 const Piece = observer(({pieceIdentifier, tryMove, setTargetFigure}) => {
     const {currentGame} = useContext(Context)
@@ -49,7 +50,7 @@ const Piece = observer(({pieceIdentifier, tryMove, setTargetFigure}) => {
             onMouseDown={handleClick}
             onMouseUp={unhandleClick}
             style={{
-                transform: currentGame.playerRole === 'Black' ? 
+                transform: currentGame.playerRole === BLACK ? 
                     `translate(${(8 - piece.position.posX) * 100}%, ${(piece.position.posY - 1) * 100}%)` :
                     `translate(${(piece.position.posX - 1) * 100}%, ${(8 - piece.position.posY) * 100}%)`                 
             }}

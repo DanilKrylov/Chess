@@ -12,7 +12,8 @@ const GameResult = () => {
 
     useEffect(() => {
         getGameInfo(gameId).then(result => {
-            if(!result.isEnded){
+            console.log(result)
+            if(!result.gameResult.isEnded){
                 navigate('/game/' + gameId)
             }
             setCurrentGameInfo(currentGame, result, userInfo.user)

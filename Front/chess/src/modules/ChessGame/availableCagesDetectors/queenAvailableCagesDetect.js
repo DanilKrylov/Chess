@@ -1,4 +1,4 @@
-import { BISHOP, QUEEN, ROCK } from "../../../utils/pieceNames";
+import { BISHOP, QUEEN, ROOK } from "../../../utils/pieceNames";
 import { bishopAvailableCagesDetect } from "./bishopAvailableCagesDetect";
 import { rockAvailableCagesDetect } from "./rockAvailableCagesDetect";
 
@@ -7,7 +7,7 @@ export const queenAvailableCagesDetect = (pieces, piece) => {
         return;
 
     const availableCages = []
-    availableCages.push(...rockAvailableCagesDetect(pieces, {...piece, name: ROCK}))
+    availableCages.push(...rockAvailableCagesDetect(pieces, {...piece, name: ROOK}))
     availableCages.push(...bishopAvailableCagesDetect(pieces, {...piece, name: BISHOP}))
     return availableCages
 }

@@ -53,6 +53,13 @@ namespace Chess.GameLogic.MoveValidators
             return true;
         }
 
+        public bool PawnPromotionIsValid(GameDto game, PieceDto pawn, PiecePositionDto to, PieceName promotionTo, string playerEmail)
+        {
+            return pawn is not null && MoveIsValid(game, pawn, to, playerEmail) &&
+                   pawn.Position.PosY == GetPrepromotePosY(pawn.Color) &&
+                   IsPromotionToAvailablePiece(promotionTo);
+        }
+
         private List<PiecePositionDto> GetCagesThatMustNotBeAttakedForCastling(PieceDto king, CastlingInfo castlingInfo)
         {
             var cages = new List<PiecePositionDto>();
@@ -69,6 +76,17 @@ namespace Chess.GameLogic.MoveValidators
             }
 
             return cages;
+        }
+
+        private bool IsPromotionToAvailablePiece(PieceName promotionTo)
+        {
+            return promotionTo == PieceName.Queen || promotionTo == PieceName.Knight ||
+                   promotionTo == PieceName.Bishop || promotionTo == PieceName.Rook;
+        }
+
+        private int GetPrepromotePosY(Color color)
+        {
+            return color == Color.White ? 7 : 2;
         }
     }
 }

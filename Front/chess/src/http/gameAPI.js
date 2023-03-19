@@ -35,6 +35,10 @@ export const doCastling = async (gameId, king, to) => {
     await hubConnection.invoke('Castling', {gameId: gameId, kingCastlingColor: king.color, castlingDirection: castlingDirection})
 }
 
+export const doPawnPromotion = async (gameId, from, to, pieceName) => {
+    await hubConnection.invoke('PawnPromotion', {gameId: gameId, from: from, to: to, promotionToPiece: pieceName})
+}
+
 export const detectCheckmate = async (gameId) => {
     await hubConnection.invoke('DetectCheckMate', gameId)
 }

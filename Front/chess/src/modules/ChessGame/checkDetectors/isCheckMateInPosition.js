@@ -3,7 +3,6 @@ import { PiecesHelper } from "../helpers/PiecesHelper"
 import { isCheckInPosition } from "./isCheckInPosition"
 
 export const isCheckMateInPosition = (pieces, checkMateToColor) => {
-    console.log(checkMateToColor)
     if(!isCheckInPosition(pieces, checkMateToColor))
         return false
 

@@ -2,18 +2,26 @@ import React, { useState, useEffect, useContext } from 'react';
 import Cage from '../UI/Cages/Cage/Cage';
 import classes from './ChessBoard.module.css'
 import Piece from '../Piece/Piece';
-import { Context } from '../..';
 import { observer } from 'mobx-react';
 import { BLACK } from '../../utils/colors';
+import { Context } from '../..';
+import PieceProposingChooser from '../PieceProposingChooser/PieceProposingChooser';
 
 const ChessBoard = observer(({ cageWidth, tryMove, currentGame }) => {
   const [targetFigure, setTargetFigure] = useState(undefined)
-  let position = {};
+  const [position, setPosition] = useState({});
+  const {proposingChooserInfo} = useContext(Context)
 
   useEffect(() => {
-    position.posY = document.getElementsByClassName(classes.chessBoard)[0].getBoundingClientRect().top
-    position.posX = document.getElementsByClassName(classes.chessBoard)[0].getBoundingClientRect().left
-  })
+    const handleResize = () => setPosition({
+      posY: document.getElementsByClassName(classes.chessBoard)[0].getBoundingClientRect().top,
+      posX: document.getElementsByClassName(classes.chessBoard)[0].getBoundingClientRect().left
+    });
+
+    window.addEventListener('resize', handleResize);
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
 
   async function mouseMove(event) {
     if (targetFigure) {
@@ -60,6 +68,8 @@ const ChessBoard = observer(({ cageWidth, tryMove, currentGame }) => {
     >
       {squares}
       {currentGame.pieces.map(c => renderPiece(c))}
+      {console.log(proposingChooserInfo.isInPieceMenu)}
+      {proposingChooserInfo.isInPieceMenu && <PieceProposingChooser boardPosition={position} cageWidth={cageWidth}></PieceProposingChooser>}
     </div>
   );
 });

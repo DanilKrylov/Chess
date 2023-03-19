@@ -37,6 +37,15 @@ namespace Chess.Web.Hubs
             await Clients.Group(castlingInfo.GameId.ToString()).SendAsync("movePiece", game);
         }
 
+        public async Task PawnPromotion(PawnPromotionInfo pawnPromotionInfo)
+        {
+            var playerEmail = Context.User.Identity.Name;
+            if(!_pieceMoverService.TryPromotePawn(pawnPromotionInfo, playerEmail, out var game))
+                throw new ArgumentException();
+
+            await Clients.Group(pawnPromotionInfo.GameId.ToString()).SendAsync("movePiece", game);
+        }
+
         public async Task DetectCheckMate(Guid gameId)
         {
             var result = await _gameLogicService.TryEndGameByCheckMateAsync(gameId);

@@ -1,4 +1,5 @@
 ﻿using Chess.Data.Enums;
+using Chess.Data.Models;
 using Chess.GameLogic.Models;
 using System;
 using System.Collections.Generic;
@@ -47,14 +48,16 @@ namespace Chess.GameLogic.Extensions
                 throw new ArgumentException();
             }
 
-            var toRemovePieces = pieces.Where(p => p.Position == to || p.Position == piece.Position).ToList();
-            foreach (var toRemovePiece in toRemovePieces)
-            {
-                pieces.Remove(toRemovePiece);
-            }
-
+            pieces.RemovePieces(piece.Position, to);
             piece.SetIsMoved();
             pieces.Add(piece with { Position = to });
+        }
+
+        public static void PromotePawn(this List<PieceDto> pieces, PieceDto pawn, PiecePositionDto to, PieceName promotionTo)
+        {
+            pieces.RemovePieces(pawn.Position, to);
+            pawn.SetIsMoved();
+            pieces.Add(pawn with {  Position = to, Name = promotionTo });
         }
 
         public static bool CanBeSetedToPosition(this IEnumerable<PieceDto> pieces, PiecePositionDto position, Color pieceColor, out bool isEnemyOnCage)
@@ -74,6 +77,18 @@ namespace Chess.GameLogic.Extensions
             }
 
             return true;
+        }
+
+        private static void RemovePieces(this List<PieceDto> pieces, params PiecePositionDto[] toRemovePositions)
+        {
+            foreach (var toRemovePosition in toRemovePositions)
+            {
+                var piece = pieces.GetPiece(toRemovePosition);
+                if(piece != null)
+                {
+                    pieces.Remove(piece);
+                }
+            }
         }
     }
 }

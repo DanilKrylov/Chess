@@ -41,6 +41,23 @@ namespace Chess.GameLogic.Services
             return true;
         }
 
+        public bool TryPromotePawn(PawnPromotionInfo pawnPromotionInfo, string playerEmail, out GameDto gameAfterMove)
+        {
+            gameAfterMove = null;
+            var game = _runningGamesService.GetRunningGame(pawnPromotionInfo.GameId);
+            if (game == null)
+                return false;
+
+            var pawn = game.Pieces.GetPiece(pawnPromotionInfo.From);
+            if(!_moveValidator.PawnPromotionIsValid(game, pawn, pawnPromotionInfo.To, pawnPromotionInfo.PromotionToPiece, playerEmail))
+                return false;
+
+            game.Pieces.PromotePawn(pawn, pawnPromotionInfo.To, pawnPromotionInfo.PromotionToPiece);
+            game.ChangeMoveTurn();
+            gameAfterMove = game; 
+            return true;
+        }
+
         public bool TryMovePiece(PieceMoveInfo pieceMoveInfo, string playerEmail, out GameDto gameAfterMove)
         {
             gameAfterMove = null;

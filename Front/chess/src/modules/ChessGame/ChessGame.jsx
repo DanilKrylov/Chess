@@ -7,23 +7,18 @@ import { setCurrentGameInfo, tryDetectCheckMate, tryMovePieceByPlayer } from './
 import { useNavigate, useParams } from 'react-router-dom';
 
 const ChessGame = observer(() => {
-    const {currentGame, userInfo} = useContext(Context)
+    const {currentGame, userInfo, proposingChooserInfo} = useContext(Context)
     const {gameId} = useParams()
     const navigate =  useNavigate()
 
     useEffect(() => {
-        joinToGameHub(gameInfoSetter, finishGame, gameId, onGameIsNotDefined)
+        joinToGameHub(gameInfoSetter, finishGame, gameId, finishGame)
         return onComponentDestruct
     }, [])
 
     async function onComponentDestruct(){
         await leftGameHub()
         currentGame.clear()
-    }
-
-    function onGameIsNotDefined(){
-        console.log('not def')
-        navigate("/gameInfo/" + gameId)
     }
 
     function gameInfoSetter(game){
@@ -34,12 +29,11 @@ const ChessGame = observer(() => {
     }
 
     function finishGame() {
-        console.log('finish')
         navigate("/gameInfo/" + gameId)
     }
 
     async function tryMove(from, to){
-        return await tryMovePieceByPlayer(from, to, currentGame, gameId)
+        return await tryMovePieceByPlayer(from, to, currentGame, gameId, proposingChooserInfo)
     }
 
     return (

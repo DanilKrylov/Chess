@@ -1,0 +1,19 @@
+.wrapper{
+    z-index: 1000;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5)
+}
+
+.pieceProposingChooser{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: 2px;
+    border-radius: 5px;
+    border: 2px solid #1A237E;
+    background-color: #E0E0E0  
+}

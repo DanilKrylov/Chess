@@ -11,51 +11,51 @@
 }
 
 .chess-piece.White-Pawn {
-    background-image: url('./img/wP.svg');
+    background-image: url('../../img/pieces/wP.svg');
 }
 
 .chess-piece.Black-Pawn {
-    background-image: url('./img/bP.svg');
+    background-image: url('../../img/pieces/bP.svg');
 }
 
 
 .chess-piece.White-Knight {
-    background-image: url('./img/wN.svg');
+    background-image: url('../../img/pieces/wN.svg');
 }
 
 .chess-piece.Black-Knight {
-    background-image: url('./img/bN.svg');
+    background-image: url('../../img/pieces/bN.svg');
 }
 
 .chess-piece.White-Bishop {
-    background-image: url('./img/wB.svg');
+    background-image: url('../../img/pieces/wB.svg');
 }
 
 .chess-piece.Black-Bishop {
-    background-image: url('./img/bB.svg');
+    background-image: url('../../img/pieces/bB.svg');
 }
 
 .chess-piece.White-Rook {
-    background-image: url('./img/wR.svg');
+    background-image: url('../../img/pieces/wR.svg');
 }
 
 .chess-piece.Black-Rook {
-    background-image: url('./img/bR.svg');
+    background-image: url('../../img/pieces/bR.svg');
 }
 
 .chess-piece.White-King {
-    background-image: url('./img/wK.svg');
+    background-image: url('../../img/pieces/wK.svg');
 }
 
 .chess-piece.Black-King {
-    background-image: url('./img/bK.svg');
+    background-image: url('../../img/pieces/bK.svg');
 }
 
 
 .chess-piece.White-Queen {
-    background-image: url('./img/wQ.svg');
+    background-image: url('../../img/pieces/wQ.svg');
 }
 
 .chess-piece.Black-Queen {
-    background-image: url('./img/bQ.svg');
+    background-image: url('../../img/pieces/bQ.svg');
 }

@@ -1,0 +1,59 @@
+.pieceProposingButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    border: 2px solid #1A237E;
+    background-color: white;
+    transition: all .3;
+    margin: 3px;
+}
+
+.pieceProposingButton:hover {
+    background-color: #E0E0E0;
+}
+
+.White-Pawn {
+    background-image: url('../../../../img/pieces/wP.svg');
+}
+
+.Black-Pawn {
+    background-image: url('../../../../img/pieces/bP.svg');
+}
+
+
+.White-Knight {
+    background-image: url('../../../../img/pieces/wN.svg');
+}
+
+.Black-Knight {
+    background-image: url('../../../../img/pieces/bN.svg');
+}
+
+.White-Bishop {
+    background-image: url('../../../../img/pieces/wB.svg');
+}
+
+.Black-Bishop {
+    background-image: url('../../../../img/pieces/bB.svg');
+}
+
+.White-Rook {
+    background-image: url('../../../../img/pieces/wR.svg');
+}
+
+.Black-Rook {
+    background-image: url('../../../../img/pieces/bR.svg');
+}
+
+.White-King {
+    background-image: url('../../../../img/pieces/wK.svg');
+}
+
+.Black-King {
+    background-image: url('../../../../img/pieces/bK.svg');
+}
+
+
+.White-Queen {
+    background-image: url('../../../../img/pieces/wQ.svg');
+}

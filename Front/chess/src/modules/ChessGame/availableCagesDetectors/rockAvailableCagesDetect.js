@@ -1,8 +1,8 @@
-import { ROCK } from "../../../utils/pieceNames";
+import { ROOK } from "../../../utils/pieceNames";
 import { AvailableCagesHelper } from "../helpers/AvailableCagesHelper";
 
 export const rockAvailableCagesDetect = (pieces, piece) => {
-    if(!piece || piece.name !== ROCK)
+    if(!piece || piece.name !== ROOK)
         return;
     
     const availableCages = []

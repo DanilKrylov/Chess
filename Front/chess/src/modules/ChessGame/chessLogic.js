@@ -1,11 +1,13 @@
-import { detectCheckmate, doCastling, movePiece } from "../../http/gameAPI"
+import { detectCheckmate, doCastling, doPawnPromotion, movePiece } from "../../http/gameAPI"
 import { BLACK, WHITE } from "../../utils/colors"
-import { CASTLING_MOVE, DEFAULT_MOVE } from "../../utils/moveTypes"
+import { CASTLING_MOVE, DEFAULT_MOVE, PAWN_PROMOTE_MOVE } from "../../utils/moveTypes"
+import { QUEEN } from "../../utils/pieceNames"
 import { isCheckMateInPosition } from "./checkDetectors/isCheckMateInPosition"
 import { MoveTypeHelper } from "./helpers/MoveTypeHelper"
 import { PiecesHelper } from "./helpers/PiecesHelper"
 import { castlingIsValid } from "./moveValidation/castlingIsValid"
 import { moveIsValid } from "./moveValidation/moveIsValid"
+import { pawnPromotionIsValid } from "./moveValidation/pawnPromotionIsValid"
 
 export const setCurrentGameInfo = (currentGameContext, game, userEmail) => {
     if (userEmail === game.whitePlayerEmail) {
@@ -30,37 +32,20 @@ export const setCurrentGameInfo = (currentGameContext, game, userEmail) => {
     currentGameContext.setIsEnded(game.gameResult.isEnded)
 }
 
-export const tryMovePieceByPlayer = async (from, to, currentGame, gameId) => {
+export const tryMovePieceByPlayer = async (from, to, currentGame, gameId, proposingChooserInfo) => {
+    if (currentGame.isEnded)
+        return false
+
     const piece = PiecesHelper.getPiece(currentGame.pieces, from)
     const moveType = MoveTypeHelper.getMoveType(piece, to)
     switch (moveType) {
         case DEFAULT_MOVE:
-            if (currentGame.isEnded || !moveIsValid(currentGame.pieces, piece, to, currentGame.playerRole, currentGame.moveTurn)) {
-                return false
-            }
-
-            try {
-                await movePiece(gameId, from, to)
-            }
-            catch {
-                return false
-            }
-            break
+            return await tryMovePiece(currentGame, piece, to, gameId)
         case CASTLING_MOVE:
-            if (currentGame.isEnded || !castlingIsValid(currentGame, piece, to)) {
-                return false
-            }
-
-            try {
-                await doCastling(gameId, piece, to)
-            }
-            catch {
-                return false
-            }
-            break
+            return await tryDoCastling(currentGame, piece, to, gameId)
+        case PAWN_PROMOTE_MOVE:
+            return await tryPromotePawn(currentGame, piece, to, gameId, proposingChooserInfo)
     }
-
-    return true
 }
 
 export const tryDetectCheckMate = async (pieces, checkMateToColor, gameId, playerRole) => {
@@ -69,4 +54,50 @@ export const tryDetectCheckMate = async (pieces, checkMateToColor, gameId, playe
 
     if (isCheckMateInPosition(pieces, checkMateToColor))
         await detectCheckmate(gameId)
+}
+
+const tryDoCastling = async (currentGame, piece, to, gameId) => {
+    if (!castlingIsValid(currentGame, piece, to))
+        return false
+
+    try {
+        await doCastling(gameId, piece, to)
+    }
+    catch {
+        return false
+    }
+
+    return true
+}
+
+const tryPromotePawn = async (currentGame, piece, to, gameId, proposingChooserInfo) => {
+    if (!pawnPromotionIsValid(currentGame, piece, to))
+        return false
+
+    proposingChooserInfo.setIsInPieceMenu(true)
+    proposingChooserInfo.setPawnPos(to)
+    proposingChooserInfo.setOnSelectPiece(async (pieceName) => {
+        console.log(pieceName)
+        try {
+            await doPawnPromotion(gameId, piece.validPosition, to, pieceName)
+        }
+        catch {
+        }
+        proposingChooserInfo.clear()
+    })
+    return false
+}
+
+const tryMovePiece = async (currentGame, piece, to, gameId) => {
+    if (!moveIsValid(currentGame.pieces, piece, to, currentGame.playerRole, currentGame.moveTurn))
+        return false
+
+    try {
+        await movePiece(gameId, piece.validPosition, to)
+    }
+    catch {
+        return false
+    }
+
+    return true
 }

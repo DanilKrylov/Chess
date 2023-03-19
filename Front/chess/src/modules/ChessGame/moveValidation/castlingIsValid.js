@@ -1,12 +1,12 @@
 import { BLACK } from "../../../utils/colors"
-import { KING, ROCK } from "../../../utils/pieceNames"
+import { KING, ROOK } from "../../../utils/pieceNames"
 import { isCheckInPosition } from "../checkDetectors/isCheckInPosition"
 import { PiecesHelper } from "../helpers/PiecesHelper"
 import { isCheckAfterMove } from "./isCheckAfterMove"
 
 export const castlingIsValid = (currentGame, king, to) => {
     const rook = getRookForCastling(currentGame.pieces, king, to)
-    if(king.name !== KING || !rook || rook.name !== ROCK || rook.isMoved || king.isMoved)
+    if(king.name !== KING || !rook || rook.name !== ROOK || rook.isMoved || king.isMoved)
         return false
 
     if(isCheckInPosition(currentGame.pieces, king.color))
