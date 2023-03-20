@@ -20,13 +20,7 @@ namespace Chess.Store
             modelBuilder.Entity<Piece>()
                   .HasKey(model => new { model.GameId, model.PosX, model.PosY });
 
-
             base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Chess;Trusted_Connection=True;");
         }
     }
 }
