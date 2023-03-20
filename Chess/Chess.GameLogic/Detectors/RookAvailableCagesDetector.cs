@@ -15,15 +15,14 @@ namespace Chess.GameLogic.Detectors
             _availableCagesHelper = availableCagesHelper;
         }
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
             var availableCages = new List<PiecePositionDto>();
-            var checkingRook = pieces.GetPiece(position);
 
-            availableCages.AddRange(GetCagesMovingTo(pieces, checkingRook, 0, 1));
-            availableCages.AddRange(GetCagesMovingTo(pieces, checkingRook, 0, -1));
-            availableCages.AddRange(GetCagesMovingTo(pieces, checkingRook, -1, 0));
-            availableCages.AddRange(GetCagesMovingTo(pieces, checkingRook, -1, 0));
+            availableCages.AddRange(GetCagesMovingTo(pieces, piece, 0, 1));
+            availableCages.AddRange(GetCagesMovingTo(pieces, piece, 0, -1));
+            availableCages.AddRange(GetCagesMovingTo(pieces, piece, -1, 0));
+            availableCages.AddRange(GetCagesMovingTo(pieces, piece, -1, 0));
 
             return availableCages;
         }

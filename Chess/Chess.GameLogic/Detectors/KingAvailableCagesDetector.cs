@@ -9,11 +9,10 @@ namespace Chess.GameLogic.Detectors
     {
         public PieceName PieceName => PieceName.King;
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
             var availableCages = new List<PiecePositionDto>();
-            var (vertPos, horPos) = position;
-            var king = pieces.GetPiece(position);
+            var (posY, posX) = piece.Position;
 
             for (var vertDiff = -1; vertDiff <= 1; vertDiff++)
             {
@@ -22,15 +21,15 @@ namespace Chess.GameLogic.Detectors
                     if (vertDiff == 0 && horDiff == 0)
                         continue;
 
-                    var currentVertPos = vertPos + vertDiff;
-                    var currentHorPos = horPos + horDiff;
+                    var currentVertPos = posY + vertDiff;
+                    var currentHorPos = posX + horDiff;
 
                     if (currentHorPos > 8 || currentHorPos < 1 || currentVertPos > 8 || currentVertPos < 1)
                         continue;
 
                     var currentPosition = new PiecePositionDto(currentVertPos, currentHorPos);
                     var pieceOnCage = pieces.GetPiece(currentPosition);
-                    if (pieceOnCage is null || pieceOnCage.Color != king.Color)
+                    if (pieceOnCage is null || pieceOnCage.Color != piece.Color)
                         availableCages.Add(currentPosition);
                 }
             }

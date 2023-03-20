@@ -17,12 +17,12 @@ namespace Chess.GameLogic.Detectors
 
         public PieceName PieceName => PieceName.Queen;
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
             var availableCages = new List<PiecePositionDto>();
 
-            availableCages.AddRange(_rookCagesDetector.GetCagesIndetectingChecks(pieces, position));
-            availableCages.AddRange(_bishopCagesDetector.GetCagesIndetectingChecks(pieces, position));
+            availableCages.AddRange(_rookCagesDetector.GetCagesIndetectingChecks(pieces, piece));
+            availableCages.AddRange(_bishopCagesDetector.GetCagesIndetectingChecks(pieces, piece));
 
             return availableCages;
         }

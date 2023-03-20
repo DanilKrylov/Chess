@@ -4,6 +4,6 @@ namespace Chess.GameLogic.Interfaces
 {
     internal interface IMoveInAvailableCagesValidator
     {
-        bool IsMoveInAvailableCages(IEnumerable<PieceDto> piecesBeforeMove, PiecePositionDto from, PiecePositionDto to);
+        bool IsMoveInAvailableCages(IEnumerable<PieceDto> piecesBeforeMove, PieceDto piece, PiecePositionDto to);
     }
 }

@@ -16,9 +16,9 @@ namespace Chess.GameLogic.MoveValidators
             _availableCagesDetector = availableCagesDetector;
         }
 
-        public bool IsMoveInAvailableCages(IEnumerable<PieceDto> piecesBeforeMove, PiecePositionDto position, PiecePositionDto newPosition)
+        public bool IsMoveInAvailableCages(IEnumerable<PieceDto> piecesBeforeMove, PieceDto piece, PiecePositionDto newPosition)
         {
-            var availableCages = _availableCagesDetector.GetCagesIndetectingChecks(piecesBeforeMove, position);
+            var availableCages = _availableCagesDetector.GetCagesIndetectingChecks(piecesBeforeMove, piece);
 
             return availableCages.Any(cage => cage == newPosition);
         }

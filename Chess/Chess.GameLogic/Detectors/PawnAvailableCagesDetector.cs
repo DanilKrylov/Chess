@@ -9,38 +9,32 @@ namespace Chess.GameLogic.Detectors
     {
         public PieceName PieceName => PieceName.Pawn;
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
-            var piece = pieces.GetPiece(position);
-            if(piece is null)
-            {
-                throw new ArgumentException("piece does not exist");
-            }
-
             var colorKoef = piece.Color == Color.White ? 1 : -1;
-            var (vertPos, horPos) = position;
+            var (posY, posX) = piece.Position;
             var availableCages = new List<PiecePositionDto>();
-            var checkingPos = new PiecePositionDto(vertPos + 1 * colorKoef, horPos);
+            var checkingPos = new PiecePositionDto(posY + 1 * colorKoef, posX);
 
             if (!pieces.PieceExists(checkingPos))
             {
                 availableCages.Add(checkingPos);
-                checkingPos = new PiecePositionDto(vertPos + 2 * colorKoef, horPos);
+                checkingPos = new PiecePositionDto(posY + 2 * colorKoef, posX);
                 if (!piece.IsMoved && !pieces.PieceExists(checkingPos))
                 {
                     availableCages.Add(checkingPos);
                 }
             }
 
-            if (horPos != 1)
+            if (posX != 1)
             {
-                checkingPos = new PiecePositionDto(vertPos + 1 * colorKoef, horPos - 1);
+                checkingPos = new PiecePositionDto(posY + 1 * colorKoef, posX - 1);
                 AddAvailableCageIfPieceColorIsOposite(checkingPos, pieces, availableCages, piece.Color);
             }
 
-            if (horPos != 8)
+            if (posX != 8)
             {
-                checkingPos = new PiecePositionDto(vertPos + 1 * colorKoef, horPos + 1);
+                checkingPos = new PiecePositionDto(posY + 1 * colorKoef, posX + 1);
                 AddAvailableCageIfPieceColorIsOposite(checkingPos, pieces, availableCages, piece.Color);
             }
 

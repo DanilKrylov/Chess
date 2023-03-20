@@ -20,7 +20,7 @@ namespace Chess.GameLogic.Detectors
             foreach (var piece in pieces.Where(piece => piece.Color == checkToColor.GetOpposite()))
             {
                 var availableCages = _availableCagesDetector
-                    .GetCagesIndetectingChecks(pieces, piece.Position);
+                    .GetCagesIndetectingChecks(pieces, piece);
 
                 if (KingInEnemyAvailableCages(availableCages, king))
                     return true;

@@ -15,7 +15,7 @@ namespace Chess.IoC
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
             GameLogicServiceRegister.RegisterServices(services, configuration);
-            StoreServiceRegister.RegisterServices(services);
+            StoreServiceRegister.RegisterServices(services, configuration);
             AuthorizeServiceRegister.RegisterServices(services, configuration);
         }
     }

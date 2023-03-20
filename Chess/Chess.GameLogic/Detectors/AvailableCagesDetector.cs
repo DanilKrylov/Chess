@@ -13,12 +13,11 @@ namespace Chess.GameLogic.Detectors
             _detectors = detectors;
         }
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
-            var piece = pieces.GetPiece(position);
             var detector = _detectors.First(detector => detector.PieceName == piece.Name);
 
-            return detector.GetCagesIndetectingChecks(pieces, position);
+            return detector.GetCagesIndetectingChecks(pieces, piece);
         }
     }
 }

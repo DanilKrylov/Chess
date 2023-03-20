@@ -7,6 +7,6 @@ namespace Chess.GameLogic.Interfaces
     {
         PieceName PieceName { get; }
 
-        List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position);
+        List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece);
     }
 }

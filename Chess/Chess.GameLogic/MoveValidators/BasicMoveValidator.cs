@@ -7,10 +7,11 @@ namespace Chess.GameLogic.MoveValidators
 {
     internal class BasicMoveValidator : IBasicMoveValidator
     {
-        public bool IsMoveValidOnEmptyBoard(GameDto game, PiecePositionDto from, PiecePositionDto to, string playerEmail)
+        public bool IsMoveValidOnEmptyBoard(GameDto game, PieceDto piece, PiecePositionDto to, string playerEmail)
         {
-            return PlayerCanDoMove(game, playerEmail) && IsMoveAvailablePiece(game, from, playerEmail) && 
-                   IsMoveOnBoard(to) && MoveIsNotOnSpot(from, to);
+            return piece is not null && PlayerCanDoMove(game, playerEmail) && 
+                   IsMoveAvailablePiece(game, piece, playerEmail) && 
+                   IsMoveOnBoard(to) && MoveIsNotOnSpot(piece.Position, to);
         }
 
         public bool IsCastlingValidOnEmptyBoard(GameDto game, string playerEmail)
@@ -24,10 +25,8 @@ namespace Chess.GameLogic.MoveValidators
                    to.PosX <= 8 && to.PosY <= 8;
         }
 
-        private bool IsMoveAvailablePiece(GameDto game, PiecePositionDto from, string playerEmail)
+        private bool IsMoveAvailablePiece(GameDto game, PieceDto piece, string playerEmail)
         {
-            var piece = game.Pieces.GetPiece(from);
-
             if(piece == null)
                 return false;
 

@@ -10,10 +10,9 @@ namespace Chess.GameLogic.Detectors
         private readonly int[] posDifferences = new int[] { -2, -1, 1, 2 };
         public PieceName PieceName => PieceName.Knight;
 
-        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PiecePositionDto position)
+        public List<PiecePositionDto> GetCagesIndetectingChecks(IEnumerable<PieceDto> pieces, PieceDto piece)
         {
             var availableCages = new List<PiecePositionDto>();
-            var piece = pieces.GetPiece(position);
 
             foreach (var horDiff in posDifferences)
             {
@@ -23,7 +22,7 @@ namespace Chess.GameLogic.Detectors
                         continue;
 
                     var currentPos = 
-                        new PiecePositionDto(position.PosY + vertDiff, position.PosX + horDiff);
+                        new PiecePositionDto(piece.Position.PosY + vertDiff, piece.Position.PosX + horDiff);
 
                     if (pieces.CanBeSetedToPosition(currentPos, piece.Color, out bool _))
                         availableCages.Add(currentPos);

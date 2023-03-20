@@ -17,6 +17,7 @@ namespace Chess.GameLogic.Services
         public async Task UpdateGame(Guid gameId, GameDto gameDto, GameResultInfo gameResult)
         {
             var game = await _gameRepository.GetGameAsync(gameId);
+
             game.Pieces = PieceMapper.MapToPieces(gameDto.Pieces, gameId).ToList();
             game.WinnerPlayerEmail = gameResult.WinnerPlayerEmail;
             game.IsEnded = gameResult.IsEnded;

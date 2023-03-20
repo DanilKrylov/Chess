@@ -23,7 +23,7 @@ namespace Chess.GameLogic.Detectors
 
             foreach (PieceDto piece in pieces.Where(p => p.Color == checkMateToColor))
             {
-                var availableCagesForPiece = _availableCagesDetector.GetCagesIndetectingChecks(pieces, piece.Position);
+                var availableCagesForPiece = _availableCagesDetector.GetCagesIndetectingChecks(pieces, piece);
 
                 foreach(var availableCage in availableCagesForPiece)
                 {

@@ -22,8 +22,8 @@ namespace Chess.GameLogic.MoveValidators
 
         public bool MoveIsValid(GameDto game, PieceDto piece, PiecePositionDto to, string playerEmail)
         {
-            return _basicValidator.IsMoveValidOnEmptyBoard(game, piece.Position, to, playerEmail) &&
-                    _availableCagesValidator.IsMoveInAvailableCages(game.Pieces, piece.Position, to) &&
+            return _basicValidator.IsMoveValidOnEmptyBoard(game, piece, to, playerEmail) &&
+                    _availableCagesValidator.IsMoveInAvailableCages(game.Pieces, piece, to) &&
                    !_checkValidator.IsCheckAfterMove(game.Pieces, piece, to);
         }
 
