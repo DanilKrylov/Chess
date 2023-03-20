@@ -11,28 +11,50 @@ import { MAIN_ROUTE } from '../../utils/routes';
 import { registerUser } from './authorize';
 
 const RegistrationForm = observer(() => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [emailInfo, setEmailInfo] = useState({ value: '', errors: [] });
+    const [passwordInfo, setPasswordInfo] = useState({ value: '', errors: [] });
+    const [confirmPasswordInfo, setConfirmPasswordInfo] = useState({ value: '', errors: [] });
     const navigate = useNavigate()
     const { userInfo } = useContext(Context)
 
     async function submit() {
-        const result = await registerUser(email, password, confirmPassword)
+        const result = await registerUser(emailInfo.value, passwordInfo.value, confirmPasswordInfo.value)
         if (result.successed) {
-            userInfo.setUser({ email: email })
+            userInfo.setUser({ email: emailInfo.value })
             userInfo.setIsAuth(true)
             navigate(MAIN_ROUTE)
         }
+        console.log(result)
+
+        setEmailInfo({ ...emailInfo, errors: result.errors.email || [] })
+        setPasswordInfo({ ...passwordInfo, errors: result.errors.password || [] })
+        setConfirmPasswordInfo({...confirmPasswordInfo, errors: result.errors.confirmPassword || []})
     }
 
     return (
         <FormWrapper>
             <div>
                 <HeadText text="Registration"></HeadText>
-                <InputBlock type='text' value={email} setValue={setEmail} text='Email'></InputBlock>
-                <InputBlock type='password' value={password} setValue={setPassword} text='Password'></InputBlock>
-                <InputBlock type='password' value={confirmPassword} setValue={setConfirmPassword} text='ConfirmPassword'></InputBlock>
+                <InputBlock
+                    type='text'
+                    errors={emailInfo.errors}
+                    value={emailInfo.value}
+                    setValue={(email) => setEmailInfo({ ...emailInfo, value: email })}
+                    text='Email'></InputBlock>
+                <InputBlock
+                    type='password'
+                    errors={passwordInfo.errors}
+                    value={passwordInfo.value}
+                    setValue={(password) => setPasswordInfo({ ...passwordInfo, value: password })}
+                    text='Password'>
+                </InputBlock>
+                <InputBlock
+                    type='password'
+                    errors={confirmPasswordInfo.errors}
+                    value={confirmPasswordInfo.value}
+                    setValue={(password) => setConfirmPasswordInfo({ ...confirmPasswordInfo, value: password })}
+                    text='Confirm password'>
+                </InputBlock>
             </div>
             <div>
                 <SubmitButton text='Register' onClick={submit}></SubmitButton>

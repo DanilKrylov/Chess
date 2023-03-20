@@ -11,18 +11,22 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 
 const LoginForm = observer(() => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [emailInfo, setEmailInfo] = useState({ value: '', errors: [] });
+    const [passwordInfo, setPasswordInfo] = useState({ value: '', errors: [] });
     const navigate = useNavigate()
     const { userInfo } = useContext(Context)
 
     async function submit() {
-        const result = await loginUser(email, password)
+        const result = await loginUser(emailInfo.value, passwordInfo.value)
+        
         if (result.successed) {
-            userInfo.setUser({ email: email })
+            userInfo.setUser({ email: emailInfo.value })
             userInfo.setIsAuth(true)
             navigate(MAIN_ROUTE)
         }
+
+        setEmailInfo({ ...emailInfo, errors: result.errors.email || [] })
+        setPasswordInfo({ ...passwordInfo, errors: result.errors.password || [] })
     }
 
     return (
@@ -30,8 +34,19 @@ const LoginForm = observer(() => {
             <FormWrapper>
                 <div>
                     <HeadText text="Login"></HeadText>
-                    <InputBlock type='text' value={email} setValue={setEmail} text='Email'></InputBlock>
-                    <InputBlock type='password' value={password} setValue={setPassword} text='Password'></InputBlock>
+                    <InputBlock
+                        type='text'
+                        errors={emailInfo.errors}
+                        value={emailInfo.value}
+                        setValue={(email) => setEmailInfo({ ...emailInfo, value: email })}
+                        text='Email'></InputBlock>
+                    <InputBlock
+                        type='password'
+                        errors={passwordInfo.errors}
+                        value={passwordInfo.value}
+                        setValue={(password) => setPasswordInfo({ ...passwordInfo, value: password })}
+                        text='Password'>
+                    </InputBlock>
                 </div>
                 <div>
                     <SubmitButton text='Login' onClick={submit}></SubmitButton>

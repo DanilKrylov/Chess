@@ -20,7 +20,10 @@ namespace Chess.Authorize
             services.AddScoped<IJwtService, JwtService>();
             services.Configure<JwtConfigure>(configuration.GetSection("JwtConfigure"));
 
-            services.AddIdentity<Player, IdentityRole>()
+            services.AddIdentity<Player, IdentityRole>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<ChessContext>();
 
             services.AddAuthentication(options =>
