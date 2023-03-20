@@ -17,7 +17,7 @@ namespace Chess.Data.Models
         public Player WhitePlayer { get; set; }
         public Player BlackPlayer { get; set; }
 
-        public Color MoveTurn { get; set; }
+        public Color MoveTurn { get; set; } = Color.White;
 
         public bool IsEnded { get; set; } = false;
 

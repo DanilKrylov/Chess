@@ -23,8 +23,7 @@ namespace Chess.Authorize
             services.AddIdentity<Player, IdentityRole>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
-            })
-                .AddEntityFrameworkStores<ChessContext>();
+            }).AddEntityFrameworkStores<ChessContext>();
 
             services.AddAuthentication(options =>
             {

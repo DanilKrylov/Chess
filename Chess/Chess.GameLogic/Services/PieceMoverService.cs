@@ -2,12 +2,6 @@
 using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
-using Chess.GameLogic.MoveValidators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.GameLogic.Services
 {
@@ -36,6 +30,7 @@ namespace Chess.GameLogic.Services
 
             game.Pieces.MovePiece(king, GetPosOfKingAfterCastling(king, castlingInfo));
             game.Pieces.MovePiece(rook, GetPosOfRockAfterCastling(rook, castlingInfo));
+
             game.ChangeMoveTurn();
             gameAfterMove = game;
             return true;
@@ -53,6 +48,7 @@ namespace Chess.GameLogic.Services
                 return false;
 
             game.Pieces.PromotePawn(pawn, pawnPromotionInfo.To, pawnPromotionInfo.PromotionToPiece);
+
             game.ChangeMoveTurn();
             gameAfterMove = game; 
             return true;

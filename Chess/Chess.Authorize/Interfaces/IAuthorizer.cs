@@ -1,5 +1,4 @@
 ﻿using Chess.Authorize.DtoModels;
-using Chess.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Chess.Authorize.Interfaces

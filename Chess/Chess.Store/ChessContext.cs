@@ -1,11 +1,6 @@
 ﻿using Chess.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Store
 {
@@ -17,7 +12,6 @@ namespace Chess.Store
         public ChessContext(DbContextOptions<ChessContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

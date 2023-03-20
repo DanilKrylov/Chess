@@ -14,9 +14,5 @@ namespace Chess.Data.Interfaces
         Task AddGameAsync(Game game);
 
         Task UpdateGameAsync(Game game, Guid gameId);
-
-        Task DeleteGameAsync(Guid gameId);
-
-        Task<bool> GameExist(Guid gameId);
     }
 }

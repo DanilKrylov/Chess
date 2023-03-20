@@ -1,5 +1,4 @@
 ﻿using Chess.Data.Enums;
-using Chess.Data.Models;
 using Chess.GameLogic.Extensions;
 using Chess.GameLogic.Interfaces;
 using Chess.GameLogic.Models;
@@ -27,7 +26,7 @@ namespace Chess.GameLogic.Detectors
             {
                 availableCages.Add(checkingPos);
                 checkingPos = new PiecePositionDto(vertPos + 2 * colorKoef, horPos);
-                if (vertPos == GetPawnVerticalStartPos(piece.Color) && !pieces.PieceExists(checkingPos))
+                if (!piece.IsMoved && !pieces.PieceExists(checkingPos))
                 {
                     availableCages.Add(checkingPos);
                 }
@@ -46,14 +45,6 @@ namespace Chess.GameLogic.Detectors
             }
 
             return availableCages;
-        }
-
-        private int GetPawnVerticalStartPos(Color color)
-        {
-            if (color == Color.White)
-                return 2;
-
-            return 7;
         }
 
         private void AddAvailableCageIfPieceColorIsOposite(PiecePositionDto checkingPos, IEnumerable<PieceDto> pieces, List<PiecePositionDto> availableCages, Color pawnColor)

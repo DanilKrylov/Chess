@@ -18,16 +18,6 @@ namespace Chess.Store.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public Task DeleteGameAsync(Guid gameId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> GameExist(Guid gameId)
-        {
-            return await _db.Games.AnyAsync(c => gameId == c.GameId);
-        }
-
         public Task<Game> GetGameAsync(Guid gameId)
         {
             return _db.Games

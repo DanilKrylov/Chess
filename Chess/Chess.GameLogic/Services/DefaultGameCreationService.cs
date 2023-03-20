@@ -24,20 +24,13 @@ namespace Chess.GameLogic.Services
         public async Task<GameDto> StartNewGameAsync(string whitePlayerEmail, string blackPlayerEmail)
         {
             var pieces = new List<Piece>();
-
-            AddPawnsToDefaultPositions(pieces);
-            AddRocksToDefaultPositions(pieces);
-            AddKnightsToDefaultPositions(pieces);
-            AddBishopsToDefaultPositions(pieces);
-            AddKingsToDefaultPositions(pieces);
-            AddQueensToDefaultPositions(pieces);
+            AddPiecesToDefaultPositions(pieces);
 
             var game = new Game()
             {
                 BlackPlayer = await _userManager.FindByEmailAsync(whitePlayerEmail),
                 WhitePlayer = await _userManager.FindByEmailAsync(blackPlayerEmail),
                 Pieces = pieces,
-                MoveTurn = Color.White,
             };
 
             await _gameRepository.AddGameAsync(game);
@@ -46,6 +39,16 @@ namespace Chess.GameLogic.Services
             _runningGamesService.TryAddRunningGame(gameDto);
 
             return gameDto;
+        }
+
+        private void AddPiecesToDefaultPositions(List<Piece> pieces)
+        {
+            AddPawnsToDefaultPositions(pieces);
+            AddRocksToDefaultPositions(pieces);
+            AddKnightsToDefaultPositions(pieces);
+            AddBishopsToDefaultPositions(pieces);
+            AddKingsToDefaultPositions(pieces);
+            AddQueensToDefaultPositions(pieces);
         }
 
         private static void AddPawnsToDefaultPositions(List<Piece> pieceList)

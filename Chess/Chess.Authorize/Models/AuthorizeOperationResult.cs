@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chess.Authorize.DtoModels
+﻿namespace Chess.Authorize.DtoModels
 {
     public class AuthorizeOperationResult
     {
@@ -12,7 +6,7 @@ namespace Chess.Authorize.DtoModels
 
         public string JwtToken { get; set; }
 
-        public Dictionary<string, List<string>> Errors { get; set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Errors { get; set; } = new();
 
         public AuthorizeOperationResult(bool seccessed)
         {
