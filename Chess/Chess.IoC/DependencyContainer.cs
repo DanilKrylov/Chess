@@ -1,10 +1,6 @@
 ﻿using Chess.Authorize;
-using Chess.Data.Interfaces;
 using Chess.GameLogic;
-using Chess.GameLogic.Interfaces;
-using Chess.GameLogic.Services;
 using Chess.Store;
-using Chess.Store.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

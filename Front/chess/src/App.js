@@ -2,26 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { observer } from 'mobx-react'
 import NavBar from "./pages/NavBar/NavBar";
-import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
-import MainPage from "./pages/MainPage/MainPage";
-import { REGISTRATION_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, GAME_ROUTE, GAMEINFO_ROUTE } from "./utils/routes";
-import LoginPage from "./pages/LoginPage/LoginPage";
 import { Context } from ".";
 import { check } from './http/userAPI'
-import ChessGamePage from "./pages/ChessGamePage/ChessGamePage";
-import GameResultPage from "./pages/GameResultPage/GameResultPage";
+import AppRoutes from "./AppRoutes";
 
 const App = observer(() => {
   const {userInfo} = useContext(Context)
   const [loading, setLoading] = useState(true)
+  const checkUserAuth = (data) => {
+    if(!data)
+        return;
+    userInfo.setIsAuth(true)
+    userInfo.setUser(data)
+  }
 
   useEffect(() => {
-    check().then(data => {
-      if(!data)
-        return;
-      userInfo.setIsAuth(true)
-      userInfo.setUser(data)
-    }).finally(() => setLoading(false))
+    check().then(checkUserAuth).finally(() => setLoading(false))
   }, [])
 
   if(loading){
@@ -31,13 +27,7 @@ const App = observer(() => {
   return (
     <BrowserRouter>
       <NavBar></NavBar>
-      <Routes>
-        <Route path={REGISTRATION_ROUTE} element={<RegistrationPage></RegistrationPage>}></Route>
-        <Route path={LOGIN_ROUTE} element={<LoginPage></LoginPage>}></Route>
-        <Route path={MAIN_ROUTE} element={<MainPage></MainPage>}></Route>
-        <Route path={GAME_ROUTE} element={<ChessGamePage></ChessGamePage>}></Route>
-        <Route path={GAMEINFO_ROUTE} element={<GameResultPage></GameResultPage>}></Route>
-      </Routes>
+      <AppRoutes></AppRoutes>
     </BrowserRouter>
   );
 })
